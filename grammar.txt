@@ -1,0 +1,16 @@
+// Grammar for the double u programming language
+
+            program : statementList EOF
+    
+      statementList : statement
+                    | statement statementList
+
+          statement : expr SEMI
+                    | loop
+                    | if
+                    | funcDef
+                    | println
+
+               expr : primary
+                    | primary op expr
+
