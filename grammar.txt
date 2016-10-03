@@ -11,6 +11,15 @@
                     | funcDef
                     | println
 
-               expr : primary
-                    | primary op expr
+               expr : firstClass
+                    | firstClass op expr
+
+         firstClass : IDENTIFIER
+                    | STRING
+                    | INTEGER
+                    | boolean
+                    | lambda
+                    | funcDef
+                    | length
+                    | OPAREN expr CPAREN
 
