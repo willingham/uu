@@ -1,25 +1,49 @@
 // Grammar for the double u programming language
 
-            program : statementList EOF
+            program : expressionList
     
-      statementList : statement
-                    | statement statementList
+     expressionList : expression
+                    | expression expressionList
 
-          statement : expr SEMI
+         expression : expr SEMI
                     | loop
                     | if
                     | funcDef
-                    | println
+                    | print
 
-               expr : firstClass
-                    | firstClass op expr
+               expr : primary
+                    | primary operator expr
 
-         firstClass : IDENTIFIER
-                    | STRING
-                    | INTEGER
-                    | boolean
-                    | lambda
+         optParamList : *empty*
+                    | paramList
+
+            argList : expr
+                    | expr COMMA argList
+
+            primary : literal
                     | funcDef
-                    | length
-                    | OPAREN expr CPAREN
+                    | OP expr CP
+                    | lambda
+                    | ID OP optParamList CP
+                    | operator PRIMARY
 
+            operator : MINUS
+                     | PLUS
+                     | NOT
+                     | GT
+                     | LT
+                     | GTE
+                     | LTE
+
+
+func main (a, b, c) {
+    while (a < c) {
+        a = a + 1;
+        }
+    for (i, i <= c, i = i + 1) {
+        print(b)
+        }
+    if (b == c) {
+        print(b, c)
+        }
+    }
