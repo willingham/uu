@@ -14,18 +14,16 @@
                expr : primary
                     | primary operator expr
 
-         optParamList : *empty*
-                    | paramList
+         optArgList : *empty*
+                    | argList
 
             argList : expr
                     | expr COMMA argList
 
             primary : literal
-                    | funcDef
                     | OP expr CP
                     | lambda
-                    | ID OP optParamList CP
-                    | operator PRIMARY
+                    | ID OP optArgList CP
 
             operator : MINUS
                      | PLUS
