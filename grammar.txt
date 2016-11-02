@@ -9,7 +9,6 @@
                     | loop
                     | if
                     | funcDef
-                    | print
 
                expr : primary
                     | primary operator expr
@@ -17,23 +16,47 @@
          optParamList : *empty*
                     | paramList
 
-            argList : expr
-                    | expr COMMA argList
+          paramList : expr
+                    | expr COMMA paramList
 
             primary : literal
                     | funcDef
                     | OP expr CP
                     | lambda
+                    | ID
                     | ID OP optParamList CP
                     | operator PRIMARY
 
-            operator : MINUS
-                     | PLUS
-                     | NOT
-                     | GT
-                     | LT
-                     | GTE
-                     | LTE
+           operator : MINUS
+                    | PLUS
+                    | NOT
+                    | GT
+                    | LT
+                    | GTE
+                    | LTE
+                    | AND
+                    | OR
+                    | EQUALS
+
+            literal : INT
+                    | STRING
+ 
+            funcDef : FUNC ID OP optParamList CP block
+  
+             lambda : LAMBDA OP optParamList CP block
+
+               loop : while
+                    | for
+
+              block : OB expresionList CB
+
+              while : WHILE OP expr CP block
+
+                for : FOR OP ID SEMI expr SEMI expr CP bock
+        
+                 if : IF OP expr CP block
+            
+
 
 
 func main (a, b, c) {
