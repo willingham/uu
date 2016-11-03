@@ -20,7 +20,6 @@
                     | expr COMMA paramList
 
             primary : literal
-                    | funcDef
                     | OP expr CP
                     | lambda
                     | ID
@@ -34,6 +33,7 @@
                     | LT
                     | GTE
                     | LTE
+                    | ISEQUAL
                     | AND
                     | OR
                     | EQUALS
