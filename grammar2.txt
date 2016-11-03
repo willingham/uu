@@ -1,0 +1,10 @@
+// grammar v2 for the double u programming language
+
+program : expressionList
+
+expressionList : expression
+               | expression expressionList
+
+expression : primary
+           | primary operator expression
+           | ID ASSIGN expression
