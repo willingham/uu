@@ -20,11 +20,12 @@
                     | expr COMMA paramList
 
             primary : literal
-                    | OP expr CP
-                    | lambda
-                    | ID
-                    | ID OP optParamList CP
-                    | operator PRIMARY
+                    | OP expr CP                // nest expressions
+                    | lambda               
+                    | ID                        // variable/func name
+                    | ID OSB literal CSB        // access array
+                    | ID OP optParamList CP     // call function
+                    | operator PRIMARY          // combine primaries
 
            operator : MINUS       // -
                     | PLUS        // +
@@ -50,7 +51,7 @@
                loop : while
                     | for
 
-              block : OB expresionList CB
+              block : OCB expresionList CCB
 
               while : WHILE OP expr CP block
 
