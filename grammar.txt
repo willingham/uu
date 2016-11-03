@@ -26,17 +26,19 @@
                     | ID OP optParamList CP
                     | operator PRIMARY
 
-           operator : MINUS
-                    | PLUS
-                    | NOT
-                    | GT
-                    | LT
-                    | GTE
-                    | LTE
-                    | ISEQUAL
-                    | AND
-                    | OR
-                    | EQUALS
+           operator : MINUS       // -
+                    | PLUS        // +
+                    | DIVIDE      // /
+                    | MULTIPLY    // *
+                    | NOT         // !
+                    | GT          // >
+                    | LT          // <
+                    | GTE         // >=
+                    | LTE         // <=
+                    | ISEQUAL     // ==
+                    | AND         // &
+                    | OR          // |
+                    | EQUALS      // =
 
             literal : INT
                     | STRING
@@ -54,8 +56,12 @@
 
                 for : FOR OP ID SEMI expr SEMI expr CP bock
         
-                 if : IF OP expr CP block
-            
+                 if : IF OP expr CP block optElse
+        
+            optElse : ELSE block
+                    | ELSE if
+                    | *empty*
+                  
 
 
 
