@@ -1,8 +1,6 @@
 #ifndef uu-type
 #define uu-type
 
-
-
 extern char *STRING;
 extern char *INT;
 
@@ -22,8 +20,10 @@ extern char *EQUALS;
 
 extern char *OP;
 extern char *CP;
-extern char *OB;
-extern char *CB;
+extern char *OSB;
+extern char *CSB;
+extern char *OCB;
+extern char *CCB;
 extern char *SEMI;
 extern char *COMMA;
 extern char *ENDOFFILE;
