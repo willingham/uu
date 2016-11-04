@@ -1,5 +1,5 @@
-#ifndef uu-type
-#define uu-type
+#ifndef uuType
+#define uuType
 
 extern char *STRING;
 extern char *INT;

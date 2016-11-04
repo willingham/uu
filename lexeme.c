@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lexeme.h"
+#include "type.h"
 
 Lexeme *newLexeme(char *type) {
     Lexeme *x = malloc(sizeof(Lexeme));
@@ -49,9 +50,11 @@ char *displayLexeme(Lexeme *x) {
         strcat(display, x->sval);
     } else if (x->type == INT) {
         strcpy(display, x->type);
-        strcat(display, itoa(x->ival));
+        char buf[10];
+        sprintf(buf, "%d", x->ival);
+        strcat(display, buf);
     } else {
-        strcpy(display, x-type);
+        strcpy(display, x->type);
     }
     return display;
 }

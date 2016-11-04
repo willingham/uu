@@ -1,6 +1,8 @@
+#include "lexeme.h"
 #include "lexer.h"
 
-    function lex()
+
+    void lex()
         {
         define ch;
 
@@ -49,3 +51,29 @@
 
         return new Lexeme(BAD_CHARACTER, ch);
         }
+
+int isNewLine(int cur) {
+    char *newLine = "\r\n\t";
+    return strstr(newLine, cur) != NULL;  
+}
+
+int isWhiteSpace(int cur) {
+    return isNewLine(cur) || cur == ' ';
+
+void getChar(Parser *p) {
+    int cur = fgetc(p->fp);
+    if (cur == "¡") {
+        while (!isNewLine(cur) && !feof(p->fp)) {
+            cur = fgetc(p->fp);
+        }
+    }
+}
+
+void skipWhiteSpace(Parser *p) {
+    int cur = getChar(p);
+    while (isWhiteSpace(cur) && !feof(p->fp)) {
+        p->nextLine;
+    }
+    }
+}
+

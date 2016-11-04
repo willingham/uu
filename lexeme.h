@@ -1,5 +1,5 @@
-#ifndef uu-lexeme
-#define uu-lexeme
+#ifndef uuLexeme
+#define uuLexeme
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,8 +24,8 @@ extern Lexeme *newLexeme(char *type);
 extern Lexeme *cons(Lexeme *l, Lexeme *r);
 extern Lexeme *car(Lexeme *x);
 extern Lexeme *cdr(Lexeme *x);
-extern void *setCar(Lexeme *x, Lexeme *l);
-extern void *setCdr(Lexeme *x, Lexeme *l);
+extern void setCar(Lexeme *x, Lexeme *l);
+extern void setCdr(Lexeme *x, Lexeme *l);
 extern char *getType(Lexeme *x);
 extern char *displayLexeme(Lexeme *x);
 
