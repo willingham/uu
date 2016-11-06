@@ -2,6 +2,11 @@
 #define uuParser
 
 typedef struct parser {
-} Parser
+    FILE *fIn;
+    FILE *fOut;
+
+    int line;
+
+} Parser;
 
 #endif

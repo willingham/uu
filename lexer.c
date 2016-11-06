@@ -53,28 +53,29 @@
         return new Lexeme(BAD_CHARACTER, ch);
         }
 
-int isNewLine(char *cur) {
+int isNewLine(int cur) {
     char *newLine = "\r\n\t";
     return strstr(newLine, cur) != NULL;  
 }
 
-int isWhiteSpace(char *cur) {
+int isWhiteSpace(int cur) {
     return isNewLine(cur) || cur == ' ';
 }
 
 void getChar(Parser *p) {
-    char *cur = fgetc(p->fp);
-    if (cur == "¡") {
-        while (!isNewLine(cur) && !feof(p->fp)) {
-            cur = fgetc(p->fp);
+    int cur = fgetc(p->fIn);
+    if (cur == '!') {
+        while (!isNewLine(cur) && !feof(p->fIn)) {
+            cur = fgetc(p->fIn);
         }
     }
+    return cur;
 }
 
 void skipWhiteSpace(Parser *p) {
-    char *cur = getChar(p);
-    while (isWhiteSpace(cur) && !feof(p->fp)) {
-        p->nextLine;
+    int cur = getChar(p);
+    while (isWhiteSpace(cur) && !feof(p->fIn)) {
+        p->line++;
     }
 }
 
