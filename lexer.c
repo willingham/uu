@@ -3,42 +3,59 @@
 #include "parser.h"
 #include "type.h"
 
-    void lex()
-        {
-        define ch;
+void lex(Parser *p) {
+    int ch;
+    skipWhiteSpace(p);
+    ch = getChar(p);
+    if (Input.failed) return Lexeme(ENDOFFILE);
 
-        skipWhiteSpace();
-
-        ch = Input.getCharacter();
-
-        if (Input.failed) return new Lexeme(END);
-
-        switch(ch)
-            {
-            // single character tokens
-            case '(':
-                return new Lexeme(OPAREN);
-            case ')':
-                return new Lexeme(CPAREN);
-            case ',':
-                return new Lexeme(COMMA);
-            case '+':
-                return new Lexeme(PLUS);
-            case '*':
-                return new Lexeme(TIMES);
-            case '-':
-                return new Lexeme(MINUS);
-            case '/':
-                return new Lexeme(DIVIDES);
-            default:
-                // multi-character tokens
-                // (only numbers, variables/keywords, and strings)
-                if (isdigit(ch))
-                    {
-                    Input.pushback(ch);
-                    return lexNumber();
-                    }
-                else if (isalpha(ch))
+    switch(ch) {
+        // single character tokens
+        case '-':
+            return newLexeme(MINUS);
+        case '+':
+            return newLexeme(PLUS);
+        case '/':
+            return newLexeme(DIVIDE);
+        case '*':
+            return newLexeme(MULTIPLY);
+        case '!':
+            return newLexeme(NOT);
+        case '>':
+            return newLexeme(GT);
+        case '<':
+            return newLexeme(LT);
+        case '&':
+            return newLexeme(AND);
+        case '|':
+            return newLexeme(OR);
+        case '=':
+            return newLexeme(EQUALS);
+        case '(':
+            return newLexeme(OP);
+        case ')':
+            return newLexeme(CP);
+        case '[':
+            return newLexeme(OSB);
+        case ']':
+            return newLexeme(CSB);
+        case '{':
+            return newLexeme(OCB);
+        case '}':
+            return newLexeme(OSB);
+        case ';':
+            return newLexeme(SEMI);
+        case ',':
+            return newLexeme(COMMA);
+        
+        default:
+            // multi-character tokens
+            // (only numbers, variables/keywords, and strings)
+            if (isdigit(ch)) {
+                ungetc(ch, p->fIn);
+                return lexNumber();
+                }
+            else if (isalpha(ch))
                     {
                     Input.pushback(ch);
                     return lexVariable();  //and keywords!
@@ -62,7 +79,7 @@ int isWhiteSpace(int cur) {
     return isNewLine(cur) || cur == ' ';
 }
 
-void getChar(Parser *p) {
+int getChar(Parser *p) {
     int cur = fgetc(p->fIn);
     if (cur == '!') {
         while (!isNewLine(cur) && !feof(p->fIn)) {
