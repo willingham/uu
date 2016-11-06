@@ -1,6 +1,7 @@
 #include "lexeme.h"
 #include "lexer.h"
 #include "parser.h"
+#include "type.h"
 
     void lex()
         {
