@@ -7,7 +7,7 @@ void lex(Parser *p) {
     int ch;
     skipWhiteSpace(p);
     ch = getChar(p);
-    if (Input.failed) return Lexeme(ENDOFFILE);
+    if (ch != NULL) return Lexeme(ENDOFFILE);
 
     switch(ch) {
         // single character tokens
@@ -52,23 +52,71 @@ void lex(Parser *p) {
             // multi-character tokens
             // (only numbers, variables/keywords, and strings)
             if (isdigit(ch)) {
-                ungetc(ch, p->fIn);
                 return lexNumber();
-                }
-            else if (isalpha(ch))
-                    {
-                    Input.pushback(ch);
-                    return lexVariable();  //and keywords!
-                    }
-                else if (ch == '\"')
-                    {
-                    Input.pushback(ch);
-                    return lexString();
-                    }
+            } else if (isalpha(ch)) {
+                return lexVariable();  //and keywords!
+            } else if (ch == '\"') {
+                return lexString();
             }
+    }
+    return new Lexeme(BAD_CHARACTER, ch);
+}
 
-        return new Lexeme(BAD_CHARACTER, ch);
-        }
+Lexeme *lexNumber(Parser *p, int i) {
+    Lexeme *l = newLexeme(INT);
+    char n[64] = "";
+    int cur;
+    int size = 1;
+    n[0] = i;
+    i = getChar(p);
+
+    while (!isWhitSpace(i) && isDigit(i)) {
+        n[size++] = i;
+        i = getChar(p);
+    }
+
+    ungetc(i, p);
+    n[size++] = "\0";
+    l->ival = atoi(n);
+    l->sval = n;
+
+    return l;
+
+}
+
+Lexeme *lexID(Parser *p, int i) {
+    Lexeme *l = newLexeme(ID);
+    char s[128] = "";
+    int size = 1;
+    s[0] = i;
+    i = getChar(p);
+
+    while(!isWhiteSpace(i) && (isAlpha(i) || isDigit(i))) {
+        s[size++] = i;
+        i = getChar(p);
+    }
+
+    ungetc(i, p->fIn);
+    s[size++] = "\0";
+    
+    if (!strcmp(s, "func")) {
+        l->type = FUNC;
+    } else if (!strcmp(s, "lambda")) {
+        l->type = LAMBDA;
+    } else if (!strcmp(s, "while")) {
+        l->type = WHILE;
+    } else if (!strcmp(s, "for")) {
+        l->type = FOR;
+    } else if (!strcmp(s, "if")) {
+        l->type = IF;
+    } else {
+        l->sval = s;
+    }
+    return l;
+}
+
+Lexeme *lexString(Parser *p, int i) {
+}
 
 int isNewLine(int cur) {
     char *newLine = "\r\n\t";

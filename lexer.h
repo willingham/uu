@@ -3,6 +3,9 @@
 #include "parser.h"
 
 extern void lex(void);
+extern Lexeme *lexNumber(Parser *p, int i);
+extern Lexeme *lexID(Parser *p, int i);
+extern Lexeme *lexString(Parser *p, int i);
 extern int isNewLine(int cur);
 extern int isWhiteSpace(int cur);
 extern int getChar(Parser *p);

@@ -1,5 +1,7 @@
 #include "type.h"
 
+char *ID = "ID";
+
 char *STRING = "STRING";
 char *INT = "INT";
 

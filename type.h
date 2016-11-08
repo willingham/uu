@@ -1,6 +1,8 @@
 #ifndef uuType
 #define uuType
 
+extern char *ID;
+
 extern char *STRING;
 extern char *INT;
 
