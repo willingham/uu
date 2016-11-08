@@ -3,7 +3,7 @@
 #include "parser.h"
 #include "type.h"
 
-void lex(Parser *p) {
+Lexeme *lex(Parser *p) {
     int ch;
     skipWhiteSpace(p);
     ch = getChar(p);
@@ -86,7 +86,7 @@ Lexeme *lexNumber(Parser *p, int i) {
 
 Lexeme *lexID(Parser *p, int i) {
     Lexeme *l = newLexeme(ID);
-    char s[128] = "";
+    char s[32] = "";
     int size = 1;
     s[0] = i;
     i = getChar(p);
@@ -116,6 +116,22 @@ Lexeme *lexID(Parser *p, int i) {
 }
 
 Lexeme *lexString(Parser *p, int i) {
+    Lexeme *l = newLexeme(STRING);
+    char s[128] = "";
+    int size = 1;
+    s[0] = i;
+    i = getChar(p);
+
+    while(n != "\"") {
+        s[size++] = i;
+        i = getChar(p);
+    }
+
+    s[size++] = "\0";
+    l->sval = s;
+    l->ival = size;
+    
+    return l;
 }
 
 int isNewLine(int cur) {
