@@ -2,6 +2,13 @@
 #define uuType
 
 extern char *ID;
+extern char *FUNC;
+extern char *LAMBDA;
+extern char *WHILE;
+extern char *FOR;
+extern char *IF;
+
+extern char *BAD;
 
 extern char *STRING;
 extern char *INT;

@@ -7,7 +7,7 @@ Lexeme *lex(Parser *p) {
     int ch;
     skipWhiteSpace(p);
     ch = getChar(p);
-    if (ch != NULL) return Lexeme(ENDOFFILE);
+    if (ch != EOF) return newLexeme(ENDOFFILE);
 
     switch(ch) {
         // single character tokens
@@ -52,31 +52,30 @@ Lexeme *lex(Parser *p) {
             // multi-character tokens
             // (only numbers, variables/keywords, and strings)
             if (isdigit(ch)) {
-                return lexNumber();
+                return lexNumber(p, ch);
             } else if (isalpha(ch)) {
-                return lexVariable();  //and keywords!
+                return lexID(p, ch);  //and keywords!
             } else if (ch == '\"') {
-                return lexString();
+                return lexString(p, ch);
             }
     }
-    return new Lexeme(BAD_CHARACTER, ch);
+    return newLexeme(BAD);
 }
 
 Lexeme *lexNumber(Parser *p, int i) {
     Lexeme *l = newLexeme(INT);
     char n[64] = "";
-    int cur;
     int size = 1;
     n[0] = i;
     i = getChar(p);
 
-    while (!isWhitSpace(i) && isDigit(i)) {
+    while (!isWhiteSpace(i) && isdigit(i)) {
         n[size++] = i;
         i = getChar(p);
     }
 
-    ungetc(i, p);
-    n[size++] = "\0";
+    ungetc(i, p->fIn);
+    n[size++] = '\0';
     l->ival = atoi(n);
     l->sval = n;
 
@@ -91,13 +90,13 @@ Lexeme *lexID(Parser *p, int i) {
     s[0] = i;
     i = getChar(p);
 
-    while(!isWhiteSpace(i) && (isAlpha(i) || isDigit(i))) {
+    while(!isWhiteSpace(i) && (isalpha(i) || isdigit(i))) {
         s[size++] = i;
         i = getChar(p);
     }
 
     ungetc(i, p->fIn);
-    s[size++] = "\0";
+    s[size++] = '\0';
     
     if (!strcmp(s, "func")) {
         l->type = FUNC;
@@ -122,12 +121,12 @@ Lexeme *lexString(Parser *p, int i) {
     s[0] = i;
     i = getChar(p);
 
-    while(n != "\"") {
+    while(i != '\"') {
         s[size++] = i;
         i = getChar(p);
     }
 
-    s[size++] = "\0";
+    s[size++] = '\0';
     l->sval = s;
     l->ival = size;
     

@@ -1,6 +1,13 @@
 #include "type.h"
 
 char *ID = "ID";
+char *FUNC = "FUNC";
+char *LAMBDA = "LAMBDA";
+char *WHILE = "WHILE";
+char *FOR = "FOR";
+char *IF = "IF";
+
+char *BAD = "BAD";
 
 char *STRING = "STRING";
 char *INT = "INT";

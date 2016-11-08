@@ -1,8 +1,9 @@
 #ifndef uuLexer
 #define uuLexer
 #include "parser.h"
+#include "lexeme.h"
 
-extern void lex(void);
+extern Lexeme *lex(Parser *p);
 extern Lexeme *lexNumber(Parser *p, int i);
 extern Lexeme *lexID(Parser *p, int i);
 extern Lexeme *lexString(Parser *p, int i);
