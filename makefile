@@ -18,4 +18,4 @@ parser.o: parser.c
 	gcc -Wall -g -c parser.c
 
 clean:
-	rm -f ./*.o
+	rm -f ./*.o ./uu
