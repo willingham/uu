@@ -134,8 +134,7 @@ Lexeme *lexString(Parser *p, int i) {
 }
 
 int isNewLine(int cur) {
-    char *newLine = "\r\n\t";
-    return strstr(newLine, cur) != NULL;  
+    return cur == '\r' || cur == '\n' || cur == '\t';  
 }
 
 int isWhiteSpace(int cur) {
