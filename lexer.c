@@ -111,6 +111,7 @@ Lexeme *lexID(Parser *p, int i) {
     } else {
         l->sval = s;
     }
+    printf("asdf %s\n", s);
     return l;
 }
 

@@ -55,6 +55,11 @@ char *displayLexeme(Lexeme *x) {
         sprintf(buf, "%d", x->ival);
         strcat(display, " ");
         strcat(display, buf);
+    } else if (x->type == ID) {
+        strcpy(display, x->type);
+        strcat(display, " ");
+        strcat(display, x->sval);
+        printf("jkl; %s\n", x->sval);
     } else {
         strcpy(display, x->type);
     }
