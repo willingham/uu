@@ -7,7 +7,7 @@ Lexeme *lex(Parser *p) {
     int ch;
     skipWhiteSpace(p);
     ch = getChar(p);
-    if (ch != EOF) return newLexeme(ENDOFFILE);
+    if (ch == EOF) return newLexeme(ENDOFFILE);
 
     switch(ch) {
         // single character tokens
@@ -42,7 +42,7 @@ Lexeme *lex(Parser *p) {
         case '{':
             return newLexeme(OCB);
         case '}':
-            return newLexeme(OSB);
+            return newLexeme(CCB);
         case ';':
             return newLexeme(SEMI);
         case ',':
@@ -97,7 +97,7 @@ Lexeme *lexID(Parser *p, int i) {
 
     ungetc(i, p->fIn);
     s[size++] = '\0';
-    
+   
     if (!strcmp(s, "func")) {
         l->type = FUNC;
     } else if (!strcmp(s, "lambda")) {
@@ -154,7 +154,11 @@ int getChar(Parser *p) {
 void skipWhiteSpace(Parser *p) {
     int cur = getChar(p);
     while (isWhiteSpace(cur) && !feof(p->fIn)) {
-        p->line++;
+        if (isNewLine(cur)) {
+            p->line++;
+        }
+        cur = getChar(p);
     }
+    ungetc(cur, p->fIn);
 }
 

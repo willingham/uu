@@ -47,11 +47,13 @@ char *displayLexeme(Lexeme *x) {
     char *display = malloc(sizeof(char) * 128);
     if(x->type == STRING) {
         strcpy(display, x->type);
+        strcat(display, " ");
         strcat(display, x->sval);
     } else if (x->type == INT) {
         strcpy(display, x->type);
         char buf[10];
         sprintf(buf, "%d", x->ival);
+        strcat(display, " ");
         strcat(display, buf);
     } else {
         strcpy(display, x->type);

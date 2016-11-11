@@ -17,5 +17,8 @@ type.o: type.c
 parser.o: parser.c
 	gcc -Wall -g -c parser.c
 
+run: uu
+	./uu sample.uu
+
 clean:
 	rm -f ./*.o ./uu
