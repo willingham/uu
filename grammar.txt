@@ -25,7 +25,7 @@
                     | ID                        // variable/func name
                     | ID OSB literal CSB        // access array
                     | ID OP optParamList CP     // call function
-                    | operator PRIMARY          // combine primaries
+                    | operator primary          // combine primaries
 
            operator : MINUS       // -
                     | PLUS        // +
