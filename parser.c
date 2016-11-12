@@ -92,6 +92,22 @@ int blockPending(Parser *p) {
     return check(p, OCB);
 }
 
+int whileePending(Parser *p) {
+    return check(p, WHILE);
+}
+
+int forrPending(Parser *p) {
+    return check(p, FOR);
+}
+
+int iffPending(Parser *p) {
+    return check(p, IF);
+}
+
+int optElsePending(Parsing *p) {
+    return check(p, ELSE) || 1; // ?? Do I need this?
+}
+
 
 // lhs grammar functions
 void program(Parser *p) {
