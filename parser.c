@@ -40,9 +40,23 @@ Lexeme *advance(Parser *p) {
     return p->last;
 }
 
+// pending functions
+int expressionListPending(p) {
+   return expressionPending(p);
+} 
+
+int expressionPending(p) {
+    return exprPending(p) || loopPending(p) || iffPending(p) || funcDefPending(p);
+}
+
+int exprPending(p) {
+    return primaryPending(p);
+}
+
 // lhs grammar functions
 void program(Parser *p) {
     expressionList(p);
+    check(p, ENDOFFILE);
 }
 
 void expressionList(Parser *p) {
