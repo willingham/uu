@@ -41,17 +41,38 @@ Lexeme *advance(Parser *p) {
 }
 
 // pending functions
-int expressionListPending(p) {
+int expressionListPending(Parser *p) {
    return expressionPending(p);
 } 
 
-int expressionPending(p) {
+int expressionPending(Parser *p) {
     return exprPending(p) || loopPending(p) || iffPending(p) || funcDefPending(p);
 }
 
-int exprPending(p) {
+int exprPending(Parser *p) {
     return primaryPending(p);
 }
+
+int optParamListPending(Parser *p) {
+    return paramListPending(p) || 1;  // ?? do I even need this?
+}
+
+int paramListPending(Parser *p) {
+    return exprPending(p);
+}
+
+int primaryPending(Parser *p) {
+    return literalPending(p) || check(p, OP) || \
+           lambdaPending(p) || idPending(p) || operatorPending(p);
+}
+
+int operatorPending(Parser *p) {
+    return check(p, MINUS) || check(p, PLUS) || check(p, DIVIDE) || check(p, MULTIPLY) || \
+           check(p, NOT) || check(p, GT) || check(p, LT) || check(p, GTE) || check(p, LTE) || \
+           check(p, ISEQUAL) || check(p, AND) || check(p, OR) || check(p, EQUALS);
+}
+
+
 
 // lhs grammar functions
 void program(Parser *p) {
