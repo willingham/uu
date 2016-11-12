@@ -54,7 +54,7 @@ void expression(Parser *p) {
     } else if (funcDefPending(p)) {
         funcDef(p);
     } else {
-        error("Expression not found.\n");
+        error("Expression not found.");
         exit(1);
     }
 }
@@ -86,9 +86,9 @@ void primary(Parser *p) {
     } else if(check(p, OP)) {
         match(p, OP);
         expr(p);
-        match(p, cp);
+        match(p, CP);
     } else if(lambdaPending(p)) {
-        lembda(p);
+        lambda(p);
     } else if(check(p, ID)) {
         match(p, ID);
         if(check(p, OSB)) {
@@ -104,7 +104,7 @@ void primary(Parser *p) {
         operator(p);
         primary(p);
     } else {
-        error("Primary not found.\n");
+        error("Primary not found.");
         exit(1);
     }
 }
@@ -135,7 +135,7 @@ void operator(Parser *p) {
     } else if (check(p, EQUALS)) {
         match(p, EQUALS);
     } else {
-        error("Operator not found.\n");
+        error("Operator not found.");
         exit(1);
     }
 }
@@ -171,7 +171,7 @@ void loop(Parser *p) {
     } else if (forrPending(p)) {
         forr(p);
     } else {
-        error("Loop not found.\n");
+        error("Loop not found.");
         exit(1);
     }
 }
@@ -183,7 +183,7 @@ void block(Parser *p) {
 }
 
 void whilee(Parser *p) {
-    match(WHILE);
+    match(p, WHILE);
     match(p, OP);
     expr(p);
     match(p, OP);
@@ -191,8 +191,8 @@ void whilee(Parser *p) {
 }
 
 void forr(Parser *p) {
-    match(FOR);
-    match(OP);
+    match(p, FOR);
+    match(p, OP);
     match(p, ID);
     match(p, SEMI);
     expr(p);
@@ -212,14 +212,14 @@ void iff(Parser *p) {
 }
 
 void optElse(Parser *p) {
-    if (check(ELSE)) {
-        match(ELSE);
+    if (check(p, ELSE)) {
+        match(p, ELSE);
         if (blockPending(p)) {
             block(p);
         } else if (iffPending(p)) {
             iff(p);
         } else {
-            error("optElse malformed.\n");
+            error("optElse malformed.");
             exit(1);
         }
     }

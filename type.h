@@ -7,6 +7,7 @@ extern char *LAMBDA;
 extern char *WHILE;
 extern char *FOR;
 extern char *IF;
+extern char *ELSE;
 
 extern char *BAD;
 

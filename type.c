@@ -6,6 +6,7 @@ char *LAMBDA = "LAMBDA";
 char *WHILE = "WHILE";
 char *FOR = "FOR";
 char *IF = "IF";
+char *ELSE = "ELSE";
 
 char *BAD = "BAD";
 

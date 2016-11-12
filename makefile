@@ -1,4 +1,4 @@
-OBJS=uu.o lexeme.o lexer.o type.o parser.o
+OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o
 uu: $(OBJS)
 	gcc -Wall -g $(OBJS) -o uu
 
@@ -14,8 +14,11 @@ lexer.o: lexer.c lexeme.c type.c parser.c
 type.o: type.c
 	gcc -Wall -g -c type.c
 
-parser.o: parser.c
+parser.o: parser.c error.c
 	gcc -Wall -g -c parser.c
+
+error.o: error.c
+	gcc -Wall -g -c error.c
 
 run: uu
 	./uu sample.uu

@@ -19,6 +19,25 @@ extern Lexeme *parse(FILE *fIn);
 extern int check(Parser *p, char *x);
 extern void match(Parser *p, char *x);
 
+// pending functions
+extern int programPending(Parser *p);
+extern int expressionListPending(Parser *p);
+extern int expressionPending(Parser *p);
+extern int exprPending(Parser *p);
+extern int  optParamListPending(Parser *p);
+extern int paramListPending(Parser *p);
+extern int primaryPending(Parser *p);
+extern int operatorPending(Parser *p);
+extern int literalPending(Parser *p);
+extern int funcDefPending(Parser *p);
+extern int lambdaPending(Parser *p);
+extern int loopPending(Parser *p);
+extern int blockPending(Parser *p);
+extern int whileePending(Parser *p);
+extern int forrPending(Parser *p);
+extern int iffPending(Parser *p);
+extern int optElsePending(Parser *p);
+
 // lhs grammar functions
 extern void program(Parser *p);
 extern void expressionList(Parser *p);
