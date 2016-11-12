@@ -1,0 +1,10 @@
+func test () {
+    foo();
+    wer = "foo";
+    if(wer == 1) {
+    }
+    while(wer == 1) {
+    }
+    for(i; i < 4321; i = i + 1) {
+    }
+}
