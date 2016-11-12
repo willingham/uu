@@ -18,6 +18,19 @@ Lexeme *parse(FILE *xfile) {
     return p->pending;
 }
 
+// 
+
+int check(Parser *p, char *x) {
+}
+
+void match(Parser *p, char *x) {
+}
+
+void advance(Parser *p) {
+    p->last = p->pending;
+    p->pending = lex(p);
+}
+
 // lhs grammar functions
 void program(Parser *p) {
     expressionList(p);
