@@ -15,6 +15,7 @@ Lexeme *parse(FILE *xfile) {
         printf("%s\n", displayLexeme(p->pending));
         p->pending = lex(p);
     }
+    program(p);
     return p->pending;
 }
 
@@ -63,7 +64,7 @@ int paramListPending(Parser *p) {
 
 int primaryPending(Parser *p) {
     return literalPending(p) || check(p, OP) || \
-           lambdaPending(p) || idPending(p) || operatorPending(p);
+           lambdaPending(p) || check(p, ID) || operatorPending(p);
 }
 
 int operatorPending(Parser *p) {
@@ -104,7 +105,7 @@ int iffPending(Parser *p) {
     return check(p, IF);
 }
 
-int optElsePending(Parsing *p) {
+int optElsePending(Parser *p) {
     return check(p, ELSE) || 1; // ?? Do I need this?
 }
 
