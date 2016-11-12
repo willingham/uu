@@ -10,6 +10,7 @@ typedef struct parser {
     FILE *fOut;
 
     int line;
+    Lexeme *last;
     Lexeme *pending;
 } Parser;
 

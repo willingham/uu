@@ -45,21 +45,14 @@ char *getType(Lexeme *x) {
 
 char *displayLexeme(Lexeme *x) {
     char *display = malloc(sizeof(char) * 128);
-    if(x->type == STRING) {
-        strcpy(display, x->type);
-        strcat(display, " ");
-        strcat(display, x->sval);
+    if(x->type == STRING || x->type == ID) {
+        sprintf(display, "%s %s", x->type, x->sval);
     } else if (x->type == INT) {
         strcpy(display, x->type);
         char buf[10];
         sprintf(buf, "%d", x->ival);
         strcat(display, " ");
         strcat(display, buf);
-    } else if (x->type == ID) {
-        strcpy(display, x->type);
-        strcat(display, " ");
-        strcat(display, x->sval);
-        printf("jkl; %s\n", x->sval);
     } else {
         strcpy(display, x->type);
     }

@@ -109,9 +109,10 @@ Lexeme *lexID(Parser *p, int i) {
     } else if (!strcmp(s, "if")) {
         l->type = IF;
     } else {
-        l->sval = s;
+        l->sval = malloc(strlen(s) + 1);
+        strcpy(l->sval, s);
+        //l->sval = s;
     }
-    printf("asdf %s\n", s);
     return l;
 }
 
@@ -128,6 +129,7 @@ Lexeme *lexString(Parser *p, int i) {
     }
 
     s[size++] = '\0';
+    l->sval = malloc(strlen(s) + 1);
     l->sval = s;
     l->ival = size;
     
