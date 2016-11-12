@@ -72,6 +72,25 @@ int operatorPending(Parser *p) {
            check(p, ISEQUAL) || check(p, AND) || check(p, OR) || check(p, EQUALS);
 }
 
+int literalPending(Parser *p) {
+    return check(p, INT) || check(p, STRING);
+}
+
+int funcDefPending(Parser *p) {
+    return check(p, FUNC);
+}
+
+int lambdaPending(Parser *p) {
+    return check(p, LAMBDA);
+}
+
+int loopPending(Parser *p) {
+    return whileePending(p) || forrPending(p); 
+}
+
+int blockPending(Parser *p) {
+    return check(p, OCB);
+}
 
 
 // lhs grammar functions
