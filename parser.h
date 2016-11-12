@@ -17,14 +17,15 @@ typedef struct parser {
 extern Lexeme *parse(FILE *fIn);
 
 extern int check(Parser *p, char *x);
-extern void match(Parser *p, char *x);
+extern Lexeme * match(Parser *p, char *x);
+extern Lexeme *advance(Parser *p);
 
 // pending functions
 extern int programPending(Parser *p);
 extern int expressionListPending(Parser *p);
 extern int expressionPending(Parser *p);
 extern int exprPending(Parser *p);
-extern int  optParamListPending(Parser *p);
+extern int optParamListPending(Parser *p);
 extern int paramListPending(Parser *p);
 extern int primaryPending(Parser *p);
 extern int operatorPending(Parser *p);

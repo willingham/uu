@@ -21,14 +21,23 @@ Lexeme *parse(FILE *xfile) {
 // 
 
 int check(Parser *p, char *x) {
+    return !strcmp(p->pending->type, x);
 }
 
-void match(Parser *p, char *x) {
+Lexeme *match(Parser *p, char *x) {
+    if (check(p, x)) {
+        return advance(p);
+    } else {
+        error("match error");
+        printf("x: %s, Pending:  %s", x, p->pending->type);
+        exit(1);
+    }
 }
 
-void advance(Parser *p) {
+Lexeme *advance(Parser *p) {
     p->last = p->pending;
     p->pending = lex(p);
+    return p->last;
 }
 
 // lhs grammar functions
