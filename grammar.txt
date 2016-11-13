@@ -1,7 +1,10 @@
 // Grammar for the double u programming language
 
             program : expressionList
-    
+     
+  optExpressionList : *empty*
+                    | expressionList
+
      expressionList : expression
                     | expression expressionList
 
@@ -51,7 +54,7 @@
                loop : while
                     | for
 
-              block : OCB expresionList CCB
+              block : OCB optExpresionList CCB
 
               while : WHILE OP expr CP block
 

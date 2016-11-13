@@ -10,11 +10,11 @@ Lexeme *parse(FILE *xfile) {
     p->fIn = xfile;
     p->line = 1;
     p->pending = lex(p);
-
+    /*
     while(strcmp(p->pending->type, ENDOFFILE) != 0) {
         printf("%s\n", displayLexeme(p->pending));
         p->pending = lex(p);
-    }
+    } */
     program(p);
     return p->pending;
 }
@@ -22,7 +22,8 @@ Lexeme *parse(FILE *xfile) {
 // 
 
 int check(Parser *p, char *x) {
-    return !strcmp(p->pending->type, x);
+    printf("PendingType: %s, TypeCheckedFor: %s\n", p->pending->type, x);
+    return strcmp(p->pending->type, x) == 0;
 }
 
 Lexeme *match(Parser *p, char *x) {
@@ -30,7 +31,7 @@ Lexeme *match(Parser *p, char *x) {
         return advance(p);
     } else {
         error("match error");
-        printf("x: %s, Pending:  %s", x, p->pending->type);
+        printf("PendingType: %s, TypeCheckedFor: %s\n", p->pending->type, x);
         exit(1);
     }
 }
@@ -266,7 +267,7 @@ void whilee(Parser *p) {
     match(p, WHILE);
     match(p, OP);
     expr(p);
-    match(p, OP);
+    match(p, CP);
     block(p);
 }
 
