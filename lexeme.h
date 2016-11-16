@@ -21,7 +21,7 @@ typedef struct lexeme {
 
 extern Lexeme *newLexeme(char *type);
 
-extern Lexeme *cons(Lexeme *l, Lexeme *r);
+extern Lexeme *cons(char *t, Lexeme *l, Lexeme *r);
 extern Lexeme *car(Lexeme *x);
 extern Lexeme *cdr(Lexeme *x);
 extern void setCar(Lexeme *x, Lexeme *l);

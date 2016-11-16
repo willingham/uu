@@ -1,5 +1,17 @@
 #include "type.h"
 
+char *EXPRESSIONLIST = "EXPRESSIONLIST";
+char *JOIN = "JOIN";
+char *EXPR = "EXPR";
+char *EXPRESSION = "EXPRESSION";
+char *OPTPARAMLIST = "OPTPARAMLIST";
+char *PARAMLIST = "PARAMLIST";
+char *PRIMARY = "PRIMARY";
+char *OPERATOR = "OPERATOR";
+char *LITERAL = "LITERAL";
+char *FUNCDEF = "FUNCDEF";
+char *BLOCK = "BLOCK";
+
 char *ID = "ID";
 char *FUNC = "FUNC";
 char *LAMBDA = "LAMBDA";
@@ -7,6 +19,7 @@ char *WHILE = "WHILE";
 char *FOR = "FOR";
 char *IF = "IF";
 char *ELSE = "ELSE";
+char *OPTELSE = "OPTELSE";
 
 char *BAD = "BAD";
 

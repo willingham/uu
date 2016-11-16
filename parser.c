@@ -22,7 +22,9 @@ Lexeme *parse(FILE *xfile) {
 // 
 
 int check(Parser *p, char *x) {
+    #ifdef uuDebug
     printf("Line: %d, PendingType: %s, TypeCheckedFor: %s\n", p->line, p->pending->type, x);
+    #endif
     return strcmp(p->pending->type, x) == 0;
 }
 
@@ -112,48 +114,53 @@ int optElsePending(Parser *p) {
 
 
 // lhs grammar functions
-void program(Parser *p) {
-    expressionList(p);
-    check(p, ENDOFFILE);
+Parser *program(Parser *p) {
+    return expressionList(p);
+    //check(p, ENDOFFILE);
 }
 
-void expressionList(Parser *p) {
-    expression(p);
+Parser *expressionList(Parser *p) {
+    Lexeme *l, *r = NULL;
+    l = expression(p);
     if (expressionListPending(p)) {
-        expressionList(p);
+        b = expressionList(p);
     }
+    return cons(EXPRESSIONLIST, l, r);
 }
 
-void expression(Parser *p) {
-    if(exprPending(p)) {
-        expr(p);
-        match(p, SEMI);
-    } else if (loopPending(p)) {
-        loop(p);
+Parser *expression(Parser *p) {
+    if (loopPending(p)) {
+        return loop(p);
     } else if (iffPending(p)) {
-        iff(p);
+        return iff(p);
     } else if (funcDefPending(p)) {
-        funcDef(p);
+        return funcDef(p);
+    } else if(exprPending(p)) {
+        Lexeme *x = expr(p);
+        return x
+        match(p, SEMI);
     } else {
         error("Expression not found.");
         exit(1);
     }
 }
 
-void expr(Parser *p) {
-    primary(p);
+Parser *expr(Parser *p) {
+    Lexeme *x, *y, *z = NULL;
+    x = primary(p);
     if(operatorPending(p)) {
-        operator(p);
-        expr(p);
+        y = operator(p);
+        z = expr(p);
     }
+    return cons(EXPR, x, cons(JOIN, y, z));
 }
 
-void optParamList(Parser *p) {
+Parser *optParamList(Parser *p) {
     if(paramListPending(p)) {
         paramList(p);
     }
 }
-void paramList(Parser *p) {
+Parser *paramList(Parser *p) {
     expr(p);
     if(exprPending(p)) {
         match(p, COMMA);
@@ -161,7 +168,7 @@ void paramList(Parser *p) {
     }
 }
 
-void primary(Parser *p) {
+Parser *primary(Parser *p) {
     if(literalPending(p)) {
         literal(p);
     } else if(check(p, OP)) {
@@ -190,7 +197,7 @@ void primary(Parser *p) {
     }
 }
 
-void operator(Parser *p) {
+Parser *operator(Parser *p) {
     if (check(p, MINUS)) {
         match(p, MINUS);
     } else if (check(p, PLUS)) {
@@ -221,7 +228,7 @@ void operator(Parser *p) {
     }
 }
 
-void literal(Parser *p) {
+Parser *literal(Parser *p) {
     if (check(p, INT)) {
         match(p, INT);
     } else if (check(p, STRING)) {
@@ -229,7 +236,7 @@ void literal(Parser *p) {
     }
 }
 
-void funcDef(Parser *p) {
+Parser *funcDef(Parser *p) {
     match(p, FUNC);
     match(p, ID);
     match(p, OP);
@@ -238,7 +245,7 @@ void funcDef(Parser *p) {
     block(p);
 }
 
-void lambda(Parser *p) {
+Parser *lambda(Parser *p) {
     match(p, LAMBDA);
     match(p, OP);
     optParamList(p);
@@ -246,7 +253,7 @@ void lambda(Parser *p) {
     block(p);
 }
 
-void loop(Parser *p) {
+Parser *loop(Parser *p) {
     if (whileePending(p)) {
         whilee(p);
     } else if (forrPending(p)) {
@@ -257,13 +264,13 @@ void loop(Parser *p) {
     }
 }
 
-void block(Parser *p) {
+Parser *block(Parser *p) {
     match(p, OCB);
     expressionList(p);
     match(p, CCB);
 }
 
-void whilee(Parser *p) {
+Parser *whilee(Parser *p) {
     match(p, WHILE);
     match(p, OP);
     expr(p);
@@ -271,7 +278,7 @@ void whilee(Parser *p) {
     block(p);
 }
 
-void forr(Parser *p) {
+Parser *forr(Parser *p) {
     match(p, FOR);
     match(p, OP);
     match(p, ID);
@@ -283,7 +290,7 @@ void forr(Parser *p) {
     block(p);
 }
 
-void iff(Parser *p) {
+Parser *iff(Parser *p) {
     match(p, IF);
     match(p, OP);
     expr(p);
@@ -292,7 +299,7 @@ void iff(Parser *p) {
     optElse(p);
 }
 
-void optElse(Parser *p) {
+Parser *optElse(Parser *p) {
     if (check(p, ELSE)) {
         match(p, ELSE);
         if (blockPending(p)) {

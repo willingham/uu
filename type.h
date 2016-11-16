@@ -1,6 +1,18 @@
 #ifndef uuType
 #define uuType
 
+extern char *EXPRESSIONLIST;
+extern char *JOIN;
+extern char *EXPR;
+extern char *EXPRESSION;
+extern char *OPTPARAMLIST;
+extern char *PARAMLIST;
+extern char *PRIMARY;
+extern char *OPERATOR;
+extern char *LITERAL;
+extern char *FUNCDEF;
+extern char *BLOCK;
+
 extern char *ID;
 extern char *FUNC;
 extern char *LAMBDA;

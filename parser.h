@@ -40,23 +40,23 @@ extern int iffPending(Parser *p);
 extern int optElsePending(Parser *p);
 
 // lhs grammar functions
-extern void program(Parser *p);
-extern void expressionList(Parser *p);
-extern void expression(Parser *p);
-extern void expr(Parser *p);
-extern void optParamList(Parser *p);
-extern void paramList(Parser *p);
-extern void primary(Parser *p);
-extern void operator(Parser *p);
-extern void literal(Parser *p);
-extern void funcDef(Parser *p);
-extern void lambda(Parser *p);
-extern void loop(Parser *p);
-extern void block(Parser *p);
-extern void whilee(Parser *p);
-extern void forr(Parser *p);
-extern void iff(Parser *p);
-extern void optElse(Parser *p);
+extern Parser *program(Parser *p);
+extern Parser *expressionList(Parser *p);
+extern Parser *expression(Parser *p);
+extern Parser *expr(Parser *p);
+extern Parser *optParamList(Parser *p);
+extern Parser *paramList(Parser *p);
+extern Parser *primary(Parser *p);
+extern Parser *operator(Parser *p);
+extern Parser *literal(Parser *p);
+extern Parser *funcDef(Parser *p);
+extern Parser *lambda(Parser *p);
+extern Parser *loop(Parser *p);
+extern Parser *block(Parser *p);
+extern Parser *whilee(Parser *p);
+extern Parser *forr(Parser *p);
+extern Parser *iff(Parser *p);
+extern Parser *optElse(Parser *p);
 
 
 #endif

@@ -15,9 +15,9 @@ Lexeme *newLexeme(char *type) {
     return x;
 }
 
-Lexeme *cons(Lexeme *l, Lexeme *r) {
+Lexeme *cons(char *t, Lexeme *l, Lexeme *r) {
     Lexeme *x = malloc(sizeof(Lexeme));
-    x->type = NULL;
+    x->type = t;
     x->left = l;
     x->right = r;
     return x;

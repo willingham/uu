@@ -2,9 +2,6 @@
 
             program : expressionList
      
-  optExpressionList : *empty*
-                    | expressionList
-
      expressionList : expression
                     | expression expressionList
 
