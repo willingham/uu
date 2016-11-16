@@ -22,7 +22,7 @@ Lexeme *parse(FILE *xfile) {
 // 
 
 int check(Parser *p, char *x) {
-    printf("PendingType: %s, TypeCheckedFor: %s\n", p->pending->type, x);
+    printf("Line: %d, PendingType: %s, TypeCheckedFor: %s\n", p->line, p->pending->type, x);
     return strcmp(p->pending->type, x) == 0;
 }
 
@@ -31,7 +31,7 @@ Lexeme *match(Parser *p, char *x) {
         return advance(p);
     } else {
         error("match error");
-        printf("PendingType: %s, TypeCheckedFor: %s\n", p->pending->type, x);
+        printf("Line: %d, PendingType: %s, TypeCheckedFor: %s\n", p->line, p->pending->type, x);
         exit(1);
     }
 }
