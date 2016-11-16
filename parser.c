@@ -114,21 +114,22 @@ int optElsePending(Parser *p) {
 
 
 // lhs grammar functions
-Parser *program(Parser *p) {
-    return expressionList(p);
-    //check(p, ENDOFFILE);
+Lexeme *program(Parser *p) {
+    Lexeme *x =  expressionList(p);
+    check(p, ENDOFFILE);
+    return x;
 }
 
-Parser *expressionList(Parser *p) {
-    Lexeme *l, *r = NULL;
-    l = expression(p);
+Lexeme *expressionList(Parser *p) {
+    Lexeme *x, *y = NULL;
+    x = expression(p);
     if (expressionListPending(p)) {
-        b = expressionList(p);
+        y = expressionList(p);
     }
-    return cons(EXPRESSIONLIST, l, r);
+    return cons(EXPRESSIONLIST, x, y);
 }
 
-Parser *expression(Parser *p) {
+Lexeme *expression(Parser *p) {
     if (loopPending(p)) {
         return loop(p);
     } else if (iffPending(p)) {
@@ -137,16 +138,17 @@ Parser *expression(Parser *p) {
         return funcDef(p);
     } else if(exprPending(p)) {
         Lexeme *x = expr(p);
-        return x
         match(p, SEMI);
+        return x;
     } else {
         error("Expression not found.");
         exit(1);
     }
+    return NULL;
 }
 
-Parser *expr(Parser *p) {
-    Lexeme *x, *y, *z = NULL;
+Lexeme *expr(Parser *p) {
+    Lexeme *x = NULL, *y = NULL, *z = NULL;
     x = primary(p);
     if(operatorPending(p)) {
         y = operator(p);
@@ -155,160 +157,182 @@ Parser *expr(Parser *p) {
     return cons(EXPR, x, cons(JOIN, y, z));
 }
 
-Parser *optParamList(Parser *p) {
+Lexeme *optParamList(Parser *p) {
+    Lexeme *x = NULL;
     if(paramListPending(p)) {
-        paramList(p);
+        x = paramList(p);
     }
+    return x;
 }
-Parser *paramList(Parser *p) {
-    expr(p);
+Lexeme *paramList(Parser *p) {
+    Lexeme *x, *y = NULL;
+    x = expr(p);
     if(exprPending(p)) {
         match(p, COMMA);
-        paramList(p);
+        y = paramList(p);
     }
+    return cons(PARAMLIST, x, y);
 }
 
-Parser *primary(Parser *p) {
+Lexeme *primary(Parser *p) {
+    Lexeme *x, *y = NULL;
     if(literalPending(p)) {
-        literal(p);
+        return literal(p);
     } else if(check(p, OP)) {
         match(p, OP);
-        expr(p);
+        x = expr(p);
         match(p, CP);
+        return x;
     } else if(lambdaPending(p)) {
-        lambda(p);
+        return lambda(p);
     } else if(check(p, ID)) {
         match(p, ID);
         if(check(p, OSB)) {
             match(p, OSB);
-            literal(p);
+            return literal(p);
             match(p, CSB);
         } else if(check(p, OP)) {
             match(p, OP);
-            optParamList(p);
+            return optParamList(p);
             match(p, CP);
         }
     } else if(operatorPending(p)) {
-        operator(p);
-        primary(p);
+        x = operator(p);
+        y = primary(p);
+        return cons(PRIMARY, x, y);
     } else {
         error("Primary not found.");
         exit(1);
     }
+    return NULL;
 }
 
-Parser *operator(Parser *p) {
+Lexeme *operator(Parser *p) {
     if (check(p, MINUS)) {
-        match(p, MINUS);
+        return match(p, MINUS);
     } else if (check(p, PLUS)) {
-        match(p, PLUS);
+        return match(p, PLUS);
     } else if (check(p, DIVIDE)) {
-        match(p, DIVIDE);
+        return match(p, DIVIDE);
     } else if (check(p, MULTIPLY)) {
-        match(p, MULTIPLY);
+        return match(p, MULTIPLY);
     } else if (check(p, NOT)) {
-        match(p, NOT);
+        return match(p, NOT);
     } else if (check(p, GT)) {
-        match(p, GT);
+        return match(p, GT);
     } else if (check(p, LT)) {
-        match(p, LT);
+        return match(p, LT);
     } else if (check(p, GTE)) {
-        match(p, GTE);
+        return match(p, GTE);
     } else if (check(p, LTE)) {
-        match(p, LTE);
+        return match(p, LTE);
     } else if (check(p, ISEQUAL)) {
-        match(p, AND);
+        return match(p, AND);
     } else if (check(p, OR)) {
-        match(p, OR);
+        return match(p, OR);
     } else if (check(p, EQUALS)) {
-        match(p, EQUALS);
+        return match(p, EQUALS);
     } else {
         error("Operator not found.");
         exit(1);
     }
+    return NULL;
 }
 
-Parser *literal(Parser *p) {
+Lexeme *literal(Parser *p) {
     if (check(p, INT)) {
-        match(p, INT);
+        return match(p, INT);
     } else if (check(p, STRING)) {
-        match(p, STRING);
+        return match(p, STRING);
     }
+    return NULL;
 }
 
-Parser *funcDef(Parser *p) {
+Lexeme *funcDef(Parser *p) {
+    Lexeme *x, *y = NULL;
     match(p, FUNC);
     match(p, ID);
     match(p, OP);
-    optParamList(p);
+    x = optParamList(p);
     match(p, CP);
-    block(p);
+    y = block(p);
+    return cons(FUNCDEF, x, y);
 }
 
-Parser *lambda(Parser *p) {
+Lexeme *lambda(Parser *p) {
+    Lexeme *x, *y = NULL;
     match(p, LAMBDA);
     match(p, OP);
-    optParamList(p);
+    x = optParamList(p);
     match(p, CP);
-    block(p);
+    y = block(p);
+    return cons(LAMBDA, x, y);
 }
 
-Parser *loop(Parser *p) {
+Lexeme *loop(Parser *p) {
     if (whileePending(p)) {
-        whilee(p);
+        return whilee(p);
     } else if (forrPending(p)) {
-        forr(p);
+        return forr(p);
     } else {
         error("Loop not found.");
         exit(1);
     }
+    return NULL;
 }
 
-Parser *block(Parser *p) {
+Lexeme *block(Parser *p) {
     match(p, OCB);
-    expressionList(p);
+    return expressionList(p);
     match(p, CCB);
 }
 
-Parser *whilee(Parser *p) {
+Lexeme *whilee(Parser *p) {
+    Lexeme *x, *y = NULL;
     match(p, WHILE);
     match(p, OP);
-    expr(p);
+    x = expr(p);
     match(p, CP);
-    block(p);
+    y = block(p);
+    return cons(WHILE, x, y);
 }
 
-Parser *forr(Parser *p) {
+Lexeme *forr(Parser *p) {
+    Lexeme *x, *y, *z, *a = NULL;
     match(p, FOR);
     match(p, OP);
-    match(p, ID);
+    x = match(p, ID);
     match(p, SEMI);
-    expr(p);
+    y = expr(p);
     match(p, SEMI);
-    expr(p);
+    z = expr(p);
     match(p, CP);
-    block(p);
+    a = block(p);
+    return cons(FOR, cons(JOIN, x, y), cons(JOIN, z, a));
 }
 
-Parser *iff(Parser *p) {
+Lexeme *iff(Parser *p) {
+    Lexeme *x, *y, *z = NULL;
     match(p, IF);
     match(p, OP);
-    expr(p);
+    x = expr(p);
     match(p, CP);
-    block(p);
-    optElse(p);
+    y = block(p);
+    z = optElse(p);
+    return cons(IF, x, cons(JOIN, y, z));
 }
 
-Parser *optElse(Parser *p) {
+Lexeme *optElse(Parser *p) {
     if (check(p, ELSE)) {
         match(p, ELSE);
         if (blockPending(p)) {
-            block(p);
+            return block(p);
         } else if (iffPending(p)) {
-            iff(p);
+            return iff(p);
         } else {
             error("optElse malformed.");
             exit(1);
         }
     }
+    return NULL;
 }

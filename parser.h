@@ -40,23 +40,23 @@ extern int iffPending(Parser *p);
 extern int optElsePending(Parser *p);
 
 // lhs grammar functions
-extern Parser *program(Parser *p);
-extern Parser *expressionList(Parser *p);
-extern Parser *expression(Parser *p);
-extern Parser *expr(Parser *p);
-extern Parser *optParamList(Parser *p);
-extern Parser *paramList(Parser *p);
-extern Parser *primary(Parser *p);
-extern Parser *operator(Parser *p);
-extern Parser *literal(Parser *p);
-extern Parser *funcDef(Parser *p);
-extern Parser *lambda(Parser *p);
-extern Parser *loop(Parser *p);
-extern Parser *block(Parser *p);
-extern Parser *whilee(Parser *p);
-extern Parser *forr(Parser *p);
-extern Parser *iff(Parser *p);
-extern Parser *optElse(Parser *p);
+extern Lexeme *program(Parser *p);
+extern Lexeme *expressionList(Parser *p);
+extern Lexeme *expression(Parser *p);
+extern Lexeme *expr(Parser *p);
+extern Lexeme *optParamList(Parser *p);
+extern Lexeme *paramList(Parser *p);
+extern Lexeme *primary(Parser *p);
+extern Lexeme *operator(Parser *p);
+extern Lexeme *literal(Parser *p);
+extern Lexeme *funcDef(Parser *p);
+extern Lexeme *lambda(Parser *p);
+extern Lexeme *loop(Parser *p);
+extern Lexeme *block(Parser *p);
+extern Lexeme *whilee(Parser *p);
+extern Lexeme *forr(Parser *p);
+extern Lexeme *iff(Parser *p);
+extern Lexeme *optElse(Parser *p);
 
 
 #endif
