@@ -421,7 +421,13 @@ void prettyPrinter(Lexeme *l, char *s) {
             }
         } else if (!strcmp(l->type, FOR)) {
             printf("for (");
-
+            prettyPrinter(l->left->left, "");
+            printf("; ");
+            prettyPrinter(l->left->right, "");
+            printf("; ");
+            prettyPrinter(l->right->left, "");
+            printf(") ");
+            prettyPrinter(l->right->right, "");
         } else if (!strcmp(l->type, MINUS)) {
             printf(" - ");
         } else if (!strcmp(l->type, PLUS)) {

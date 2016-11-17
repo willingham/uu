@@ -12,5 +12,5 @@ int main(int argc, char **argv, char **env) {
     }
     
     Lexeme *parseTree = parse(fopen(argv[1], "r"));
-
+    parseTree = NULL;
 }
