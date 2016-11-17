@@ -383,6 +383,10 @@ void prettyPrinter(Lexeme *l, char *s) {
         } else if (!strcmp(l->type, PRIMARY)) {
             prettyPrinter(l->left, "");
             prettyPrinter(l->right, "");
+        } else if (!strcmp(l->type, LAMBDA)) {
+            prettyPrinter(l->left, "");
+            prettyPrinter(l->right, "");
+
         } else {
             printf("%s", l->sval);
         }
