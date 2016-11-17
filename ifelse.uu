@@ -1,0 +1,5 @@
+    if(wer == 1) {
+        print("wer");
+    } else if (wer == 2) {
+        print("wer");
+    }
