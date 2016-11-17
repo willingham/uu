@@ -372,7 +372,10 @@ void prettyPrinter(Lexeme *l, char *s) {
             prettyPrinter(l->right->right, "");
         } else if (!strcmp(l->type, EXPRESSIONLIST)) {
             prettyPrinter(l->left, "");
-            printf(";\n");
+            if (!strcmp(l->left->type, EXPR)) {
+
+                printf("; \n");
+            }
             prettyPrinter(l->right, "");
         } else if (!strcmp(l->type, EXPR)) {
             prettyPrinter(l->left, "");
@@ -381,7 +384,9 @@ void prettyPrinter(Lexeme *l, char *s) {
             prettyPrinter(l->right->right, "");
         } else if (!strcmp(l->type, PARAMLIST)) {
             prettyPrinter(l->left, "");
-            printf(", ");
+            if (l->right) {
+                printf(", ");
+            }
             prettyPrinter(l->right, "");
         } else if (!strcmp(l->type, PRIMARY)) {
             prettyPrinter(l->left, "");
