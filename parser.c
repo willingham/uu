@@ -16,6 +16,7 @@ Lexeme *parse(FILE *xfile) {
         p->pending = lex(p);
     } */
     Lexeme *l = program(p);
+    //printf("%s\n%s\n%s\n", l->left->type, l->left->type, l->left->right->right->left->right->left->left->left->sval);
     prettyPrinter(l, "");
     return p->pending;
 }
@@ -159,9 +160,9 @@ Lexeme *expr(Parser *p) {
 }
 
 Lexeme *optParamList(Parser *p) {
-    Lexeme *x = NULL;
+    Lexeme *x = newLexeme(OPTPARAMLIST);
     if(paramListPending(p)) {
-        x = paramList(p);
+        x->left = paramList(p);
     }
     return x;
 }
@@ -229,6 +230,8 @@ Lexeme *operator(Parser *p) {
     } else if (check(p, LTE)) {
         return match(p, LTE);
     } else if (check(p, ISEQUAL)) {
+        return match(p, ISEQUAL);
+    } else if (check(p, AND)) {
         return match(p, AND);
     } else if (check(p, OR)) {
         return match(p, OR);
@@ -285,8 +288,9 @@ Lexeme *loop(Parser *p) {
 
 Lexeme *block(Parser *p) {
     match(p, OCB);
-    return expressionList(p);
+    Lexeme *l = cons(BLOCK, expressionList(p), NULL);
     match(p, CCB);
+    return l;
 }
 
 Lexeme *whilee(Parser *p) {
@@ -325,12 +329,15 @@ Lexeme *iff(Parser *p) {
 }
 
 Lexeme *optElse(Parser *p) {
+    Lexeme *l = newLexeme(OPTELSE);
     if (check(p, ELSE)) {
         match(p, ELSE);
         if (blockPending(p)) {
-            return block(p);
+            l->left = block(p);
+            return l;
         } else if (iffPending(p)) {
-            return iff(p);
+            l->left = iff(p);
+            return l;
         } else {
             error("optElse malformed.");
             exit(1);
@@ -361,34 +368,88 @@ void prettyPrinter(Lexeme *l, char *s) {
         } else if (!strcmp(l->type, FUNCDEF)) {
             printf("func ");
             prettyPrinter(l->left, "");
-            printf("(");
             prettyPrinter(l->right->left, "");
-            printf(") { \n");
             prettyPrinter(l->right->right, "");
-            printf("}\n");
         } else if (!strcmp(l->type, EXPRESSIONLIST)) {
             prettyPrinter(l->left, "");
             printf(";\n");
+            prettyPrinter(l->right, "");
         } else if (!strcmp(l->type, EXPR)) {
             prettyPrinter(l->left, "");
             printf(" ");
             prettyPrinter(l->right->left, "");
             prettyPrinter(l->right->right, "");
         } else if (!strcmp(l->type, PARAMLIST)) {
-            printf("(");
             prettyPrinter(l->left, "");
             printf(", ");
             prettyPrinter(l->right, "");
-            printf(")");
         } else if (!strcmp(l->type, PRIMARY)) {
             prettyPrinter(l->left, "");
             prettyPrinter(l->right, "");
         } else if (!strcmp(l->type, LAMBDA)) {
             prettyPrinter(l->left, "");
             prettyPrinter(l->right, "");
+        } else if (!strcmp(l->type, WHILE)) {
+            printf("while (");
+            prettyPrinter(l->left, "");
+            printf(")\n");
+            prettyPrinter(l->right, "");
+        } else if (!strcmp(l->type, IF)) {
+            printf("if (");
+            prettyPrinter(l->left, "");
+            printf(")\n");
+            prettyPrinter(l->right->left, "");
+            prettyPrinter(l->right->right, "");
+        } else if (!strcmp(l->type, BLOCK)) {
+            printf("{\n");
+            prettyPrinter(l->left, "");
+            printf("}\n");
+        } else if (!strcmp(l->type, OPTPARAMLIST)) {
+            printf("(");
+            prettyPrinter(l->left, "");
+            printf(") ");
+        } else if (!strcmp(l->type, OPTELSE)) {
+            printf("asdf");
+            if (l->left != NULL) {
+                if (!strcmp(l->left->type, BLOCK)) {
+                    printf(" else ");
+                    prettyPrinter(l->left, "");
+                } else if (!strcmp(l->left->type, IF)) {
+                    printf(" else ");
+                    prettyPrinter(l->left, "");
+                }
+            }
+        } else if (!strcmp(l->type, FOR)) {
+            printf("for (");
 
-        } else {
-            printf("%s", l->sval);
-        }
+        } else if (!strcmp(l->type, MINUS)) {
+            printf(" - ");
+        } else if (!strcmp(l->type, PLUS)) {
+            printf(" + ");
+        } else if (!strcmp(l->type, DIVIDE)) {
+            printf(" / ");
+        } else if (!strcmp(l->type, MULTIPLY)) {
+            printf(" * ");
+        } else if (!strcmp(l->type, NOT)) {
+            printf(" ! ");
+        } else if (!strcmp(l->type, GT)) {
+            printf(" > ");
+        } else if (!strcmp(l->type, LT)) {
+            printf(" < ");
+        } else if (!strcmp(l->type, GTE)) {
+            printf(" >= ");
+        } else if (!strcmp(l->type, LTE)) {
+            printf(" <= ");
+        } else if (!strcmp(l->type, ISEQUAL)) {
+            printf(" == ");
+        } else if (!strcmp(l->type, AND)) {
+            printf(" & ");
+        } else if (!strcmp(l->type, OR)) {
+            printf(" | ");
+        } else if (!strcmp(l->type, EQUALS)) {
+            printf(" = ");
+        } //else {
+            //printf("%s", l->sval);
+       // }
     }
 }

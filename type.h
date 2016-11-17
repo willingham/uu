@@ -19,6 +19,7 @@ extern char *LAMBDA;
 extern char *WHILE;
 extern char *FOR;
 extern char *IF;
+extern char *OPTELSE;
 extern char *ELSE;
 
 extern char *BAD;

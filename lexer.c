@@ -30,6 +30,11 @@ Lexeme *lex(Parser *p) {
         case '|':
             return newLexeme(OR);
         case '=':
+            ch = getChar(p);
+            if (ch == '=') {
+                return newLexeme(ISEQUAL);
+            }
+            ungetc(ch, p->fIn);
             return newLexeme(EQUALS);
         case '(':
             return newLexeme(OP);
