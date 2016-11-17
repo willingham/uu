@@ -15,7 +15,8 @@ Lexeme *parse(FILE *xfile) {
         printf("%s\n", displayLexeme(p->pending));
         p->pending = lex(p);
     } */
-    program(p);
+    Lexeme *l = program(p);
+    prettyPrinter(l, "");
     return p->pending;
 }
 
@@ -154,7 +155,7 @@ Lexeme *expr(Parser *p) {
         y = operator(p);
         z = expr(p);
     }
-    return cons(EXPR, x, cons(JOIN, y, z));
+    return cons(EXPR, x, cons(GLUE, y, z));
 }
 
 Lexeme *optParamList(Parser *p) {
@@ -186,16 +187,17 @@ Lexeme *primary(Parser *p) {
     } else if(lambdaPending(p)) {
         return lambda(p);
     } else if(check(p, ID)) {
-        match(p, ID);
+        x = match(p, ID);
         if(check(p, OSB)) {
             match(p, OSB);
-            return literal(p);
+            y = literal(p);
             match(p, CSB);
         } else if(check(p, OP)) {
             match(p, OP);
-            return optParamList(p);
+            y = optParamList(p);
             match(p, CP);
         }
+        return cons(PRIMARY, x, y);
     } else if(operatorPending(p)) {
         x = operator(p);
         y = primary(p);
@@ -249,14 +251,14 @@ Lexeme *literal(Parser *p) {
 }
 
 Lexeme *funcDef(Parser *p) {
-    Lexeme *x, *y = NULL;
+    Lexeme *x, *y, *z = NULL;
     match(p, FUNC);
-    match(p, ID);
+    x = match(p, ID);
     match(p, OP);
-    x = optParamList(p);
+    y = optParamList(p);
     match(p, CP);
-    y = block(p);
-    return cons(FUNCDEF, x, y);
+    z = block(p);
+    return cons(FUNCDEF, x, cons(GLUE, y, z));
 }
 
 Lexeme *lambda(Parser *p) {
@@ -308,7 +310,7 @@ Lexeme *forr(Parser *p) {
     z = expr(p);
     match(p, CP);
     a = block(p);
-    return cons(FOR, cons(JOIN, x, y), cons(JOIN, z, a));
+    return cons(FOR, cons(GLUE, x, y), cons(GLUE, z, a));
 }
 
 Lexeme *iff(Parser *p) {
@@ -319,7 +321,7 @@ Lexeme *iff(Parser *p) {
     match(p, CP);
     y = block(p);
     z = optElse(p);
-    return cons(IF, x, cons(JOIN, y, z));
+    return cons(IF, x, cons(GLUE, y, z));
 }
 
 Lexeme *optElse(Parser *p) {
@@ -335,4 +337,54 @@ Lexeme *optElse(Parser *p) {
         }
     }
     return NULL;
+}
+/*
+void prettyPrinter(Lexeme *l, char *s) {
+    if (l != NULL) {
+        char *temp = malloc(sizeof(char) * 128);
+        strcat(temp, s);
+        strcat(temp, "");
+        prettyPrinter(l->left, temp);
+        printf("%s\n", displayLexeme(l));
+        prettyPrinter(l->right, temp);
+    }
+}*/
+
+void prettyPrinter(Lexeme *l, char *s) {
+    if (l != NULL) {
+        if (!strcmp(l->type, STRING)) {
+            printf("\"%s\"", l->sval);
+        } else if (!strcmp(l->type, INT)) {
+            printf("%d", l->ival);
+        } else if (!strcmp(l->type, ID) || !strcmp(l->type, FUNC)) {
+            printf("%s", l->sval);
+        } else if (!strcmp(l->type, FUNCDEF)) {
+            printf("func ");
+            prettyPrinter(l->left, "");
+            printf("(");
+            prettyPrinter(l->right->left, "");
+            printf(") { \n");
+            prettyPrinter(l->right->right, "");
+            printf("}\n");
+        } else if (!strcmp(l->type, EXPRESSIONLIST)) {
+            prettyPrinter(l->left, "");
+            printf(";\n");
+        } else if (!strcmp(l->type, EXPR)) {
+            prettyPrinter(l->left, "");
+            printf(" ");
+            prettyPrinter(l->right->left, "");
+            prettyPrinter(l->right->right, "");
+        } else if (!strcmp(l->type, PARAMLIST)) {
+            printf("(");
+            prettyPrinter(l->left, "");
+            printf(", ");
+            prettyPrinter(l->right, "");
+            printf(")");
+        } else if (!strcmp(l->type, PRIMARY)) {
+            prettyPrinter(l->left, "");
+            prettyPrinter(l->right, "");
+        } else {
+            printf("%s", l->sval);
+        }
+    }
 }

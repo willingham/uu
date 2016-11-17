@@ -121,19 +121,22 @@ Lexeme *lexID(Parser *p, int i) {
 Lexeme *lexString(Parser *p, int i) {
     Lexeme *l = newLexeme(STRING);
     char s[128] = "";
-    int size = 1;
-    s[0] = i;
+    int size = 0;
+    //s[0] = i;
     i = getChar(p);
 
     while(i != '\"') {
-        s[size++] = i;
+        s[size] = i;
+        size++;
         i = getChar(p);
     }
 
     s[size++] = '\0';
     l->sval = malloc(strlen(s) + 1);
-    l->sval = s;
+    strcpy(l->sval, s);
     l->ival = size;
+    //printf("s: %s", s);
+    //printf("l->sval: %s", l->sval);
     
     return l;
 }

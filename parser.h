@@ -58,5 +58,6 @@ extern Lexeme *forr(Parser *p);
 extern Lexeme *iff(Parser *p);
 extern Lexeme *optElse(Parser *p);
 
+extern void prettyPrinter(Lexeme *l, char *s);
 
 #endif

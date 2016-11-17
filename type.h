@@ -2,7 +2,7 @@
 #define uuType
 
 extern char *EXPRESSIONLIST;
-extern char *JOIN;
+extern char *GLUE;
 extern char *EXPR;
 extern char *EXPRESSION;
 extern char *OPTPARAMLIST;

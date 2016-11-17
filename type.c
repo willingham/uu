@@ -1,7 +1,7 @@
 #include "type.h"
 
 char *EXPRESSIONLIST = "EXPRESSIONLIST";
-char *JOIN = "JOIN";
+char *GLUE = "GLUE";
 char *EXPR = "EXPR";
 char *EXPRESSION = "EXPRESSION";
 char *OPTPARAMLIST = "OPTPARAMLIST";
