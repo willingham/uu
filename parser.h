@@ -14,7 +14,7 @@ typedef struct parser {
     Lexeme *pending;
 } Parser;
 
-extern Lexeme *parse(FILE *fIn);
+extern Lexeme *parse(FILE *fIn, int pp);
 
 extern int check(Parser *p, char *x);
 extern Lexeme * match(Parser *p, char *x);
