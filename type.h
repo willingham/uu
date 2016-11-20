@@ -1,6 +1,11 @@
 #ifndef uuType
 #define uuType
 
+// env types
+extern char *ENV;
+extern char *TABLE;
+
+// higher level types
 extern char *EXPRESSIONLIST;
 extern char *GLUE;
 extern char *EXPR;
@@ -13,6 +18,7 @@ extern char *LITERAL;
 extern char *FUNCDEF;
 extern char *BLOCK;
 
+// lower level types
 extern char *ID;
 extern char *FUNC;
 extern char *LAMBDA;

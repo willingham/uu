@@ -1,5 +1,10 @@
 #include "type.h"
 
+// env types
+char *ENV = "ENV";
+char *TABLE = "TABLE";
+
+// higher level types
 char *EXPRESSIONLIST = "EXPRESSIONLIST";
 char *GLUE = "GLUE";
 char *EXPR = "EXPR";
@@ -12,6 +17,7 @@ char *LITERAL = "LITERAL";
 char *FUNCDEF = "FUNCDEF";
 char *BLOCK = "BLOCK";
 
+// lower level types
 char *ID = "ID";
 char *FUNC = "FUNC";
 char *LAMBDA = "LAMBDA";
