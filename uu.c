@@ -11,7 +11,7 @@ int main(int argc, char **argv, char **env) {
     if(argc < 2) {
         fprintf(stderr, "Usage: ./uu <uu source file>\n");
         exit(1);
-    } else if (argc == 2) {
+    } else if (argc == 3) {
         if (!strcmp(argv[1], "-pp")) {
             pp = 1;
             fname = argv[2];

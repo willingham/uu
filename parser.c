@@ -416,7 +416,6 @@ void prettyPrinter(Lexeme *l, char *s) {
             prettyPrinter(l->left, "");
             printf(") ");
         } else if (!strcmp(l->type, OPTELSE)) {
-            printf("asdf");
             if (l->left != NULL) {
                 if (!strcmp(l->left->type, BLOCK)) {
                     printf(" else ");

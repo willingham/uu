@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "env.h"
 #include "lexeme.h"
+#include "type.h"
 
 Lexeme *create() {
     return extendEnv(NULL, NULL, NULL);
@@ -38,7 +39,7 @@ int sameVariable(Lexeme *x, Lexeme *y) {
 }
 
 Lexeme *insert(Lexeme *var, Lexeme *val, Lexeme *env) {
-    var table = car(env);
+    Lexeme *table = car(env);
     setCar(table, cons(GLUE, var, car(table)));
     setCdr(table, cons(GLUE, val, cdr(table)));
     return val;
