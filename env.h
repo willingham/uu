@@ -5,6 +5,7 @@
 
 extern Lexeme *createEnv();
 extern Lexeme *extendEnv(Lexeme *env, Lexeme *vars, Lexeme *vals);
+extern Lexeme *makeTable(Lexeme *vars, Lexeme *vals);
 
 
 

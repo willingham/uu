@@ -7,4 +7,9 @@ Lexeme *create() {
 }
 
 Lexeme *extendEnv(Lexeme *env, Lexeme *vars, Lexeme *vals) {
-    return cons(env
+    return cons(ENV, makeTable(vars, vals), env);
+}
+
+Lexeme *makeTable(Lexeme *vars, Lexeme *vals) {
+    return cons(TABLE, vars, vals);
+}
