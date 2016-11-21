@@ -15,7 +15,7 @@ Lexeme *makeTable(Lexeme *vars, Lexeme *vals) {
     return cons(TABLE, vars, vals);
 }
 
-Lexeme *lookupEnv(Lexeme *env, Lexeme *var) {
+Lexeme *lookupEnv(Lexeme *var, Lexeme *env) {
     while (env != NULL) {
         Lexeme *table = car(env);
         Lexeme *vars = car(table);

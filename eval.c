@@ -4,6 +4,7 @@
 #include "type.h"
 #include "env.h"
 
+/*
 void evals(Lexeme *tree, Lexeme *env) {
     char *type = tree->type;
     if (!strcmp(type, INT)) {
@@ -18,7 +19,7 @@ void evals(Lexeme *tree, Lexeme *env) {
     } else if (!strcmp(type, GTE)) {
     } else if (!strcmp(type, LTE)) {
     }
-}
+} */
 
 Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
@@ -27,104 +28,58 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
         } else if (!strcmp(tree->type, INT)) {
             return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
-            return lookup(tree, env);
+            return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
             return evalFuncDef(tree, env);
-
-
-            eval(tree->left);
-            eval(tree->right->left);
-            eval(tree->right->right);
         } else if (!strcmp(tree->type, EXPRESSIONLIST)) {
-            eval(tree->left);
-            if (!strcmp(tree->left->type, EXPR)) {
-
-                printf("; \n");
-            }
-            eval(tree->right);
+            return evalExpressionList(tree, env);
         } else if (!strcmp(tree->type, EXPR)) {
-            eval(tree->left);
-            printf(" ");
-            eval(tree->right->left);
-            eval(tree->right->right);
+            return evalExpr(tree, env);
         } else if (!strcmp(tree->type, PARAMLIST)) {
-            eval(tree->left);
-            if (tree->right) {
-                printf(", ");
-            }
-            eval(tree->right);
+            return evalParamList(tree, env);
         } else if (!strcmp(tree->type, PRIMARY)) {
-            eval(tree->left);
-            eval(tree->right);
+            return evalPrimary(tree, env);
         } else if (!strcmp(tree->type, LAMBDA)) {
-            eval(tree->left);
-            eval(tree->right);
+            return evalLambda(tree, env);
         } else if (!strcmp(tree->type, WHILE)) {
-            printf("while (");
-            eval(tree->left);
-            printf(")\n");
-            eval(tree->right);
+            return evalWhile(tree, env);
         } else if (!strcmp(tree->type, IF)) {
-            printf("if (");
-            eval(tree->left);
-            printf(")\n");
-            eval(tree->right->left);
-            eval(tree->right->right);
+            return evalIf(tree, env);
         } else if (!strcmp(tree->type, BLOCK)) {
-            printf("{\n");
-            eval(tree->left);
-            printf("}\n");
+            return evalBlock(tree, env);
         } else if (!strcmp(tree->type, OPTPARAMLIST)) {
-            printf("(");
-            eval(tree->left);
-            printf(") ");
+            return evalOptParamList(tree, env);
         } else if (!strcmp(tree->type, OPTELSE)) {
-            if (tree->left != NULL) {
-                if (!strcmp(tree->left->type, BLOCK)) {
-                    printf(" else ");
-                    eval(tree->left);
-                } else if (!strcmp(tree->left->type, IF)) {
-                    printf(" else ");
-                    eval(tree->left);
-                }
-            }
+            return evalOptElse(tree, env);
         } else if (!strcmp(tree->type, FOR)) {
-            printf("for (");
-            eval(tree->left->left);
-            printf("; ");
-            eval(tree->left->right);
-            printf("; ");
-            eval(tree->right->left);
-            printf(") ");
-            eval(tree->right->right);
+            return evalFor(tree, env);
         } else if (!strcmp(tree->type, MINUS)) {
-            printf(" - ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, PLUS)) {
-            printf(" + ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, DIVIDE)) {
-            printf(" / ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, MULTIPLY)) {
-            printf(" * ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, NOT)) {
-            printf(" ! ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, GT)) {
-            printf(" > ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, LT)) {
-            printf(" < ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, GTE)) {
-            printf(" >= ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, LTE)) {
-            printf(" <= ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, ISEQUAL)) {
-            printf(" == ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, AND)) {
-            printf(" & ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, OR)) {
-            printf(" | ");
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, EQUALS)) {
-            printf(" = ");
-        } //else {
-            //printf("%s", tree->sval);
-       // }
+            return evalSimpleOp(tree, env);
+        } 
     }
+    return NULL;
 }
