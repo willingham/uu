@@ -20,7 +20,7 @@ void evals(Lexeme *tree, Lexeme *env) {
     }
 }
 
-void eval(Lexeme *tree, Lexeme *env) {
+Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
         if (!strcmp(tree->type, STRING)) {
             printf("\"%s\"", tree->sval);
@@ -30,71 +30,71 @@ void eval(Lexeme *tree, Lexeme *env) {
             printf("%s", tree->sval);
         } else if (!strcmp(tree->type, FUNCDEF)) {
             printf("func ");
-            prettyPrinter(tree->left, "");
-            prettyPrinter(tree->right->left, "");
-            prettyPrinter(tree->right->right, "");
+            eval(tree->left);
+            eval(tree->right->left);
+            eval(tree->right->right);
         } else if (!strcmp(tree->type, EXPRESSIONLIST)) {
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             if (!strcmp(tree->left->type, EXPR)) {
 
                 printf("; \n");
             }
-            prettyPrinter(tree->right, "");
+            eval(tree->right);
         } else if (!strcmp(tree->type, EXPR)) {
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             printf(" ");
-            prettyPrinter(tree->right->left, "");
-            prettyPrinter(tree->right->right, "");
+            eval(tree->right->left);
+            eval(tree->right->right);
         } else if (!strcmp(tree->type, PARAMLIST)) {
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             if (tree->right) {
                 printf(", ");
             }
-            prettyPrinter(tree->right, "");
+            eval(tree->right);
         } else if (!strcmp(tree->type, PRIMARY)) {
-            prettyPrinter(tree->left, "");
-            prettyPrinter(tree->right, "");
+            eval(tree->left);
+            eval(tree->right);
         } else if (!strcmp(tree->type, LAMBDA)) {
-            prettyPrinter(tree->left, "");
-            prettyPrinter(tree->right, "");
+            eval(tree->left);
+            eval(tree->right);
         } else if (!strcmp(tree->type, WHILE)) {
             printf("while (");
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             printf(")\n");
-            prettyPrinter(tree->right, "");
+            eval(tree->right);
         } else if (!strcmp(tree->type, IF)) {
             printf("if (");
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             printf(")\n");
-            prettyPrinter(tree->right->left, "");
-            prettyPrinter(tree->right->right, "");
+            eval(tree->right->left);
+            eval(tree->right->right);
         } else if (!strcmp(tree->type, BLOCK)) {
             printf("{\n");
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             printf("}\n");
         } else if (!strcmp(tree->type, OPTPARAMLIST)) {
             printf("(");
-            prettyPrinter(tree->left, "");
+            eval(tree->left);
             printf(") ");
         } else if (!strcmp(tree->type, OPTELSE)) {
             if (tree->left != NULL) {
                 if (!strcmp(tree->left->type, BLOCK)) {
                     printf(" else ");
-                    prettyPrinter(tree->left, "");
+                    eval(tree->left);
                 } else if (!strcmp(tree->left->type, IF)) {
                     printf(" else ");
-                    prettyPrinter(tree->left, "");
+                    eval(tree->left);
                 }
             }
         } else if (!strcmp(tree->type, FOR)) {
             printf("for (");
-            prettyPrinter(tree->left->left, "");
+            eval(tree->left->left);
             printf("; ");
-            prettyPrinter(tree->left->right, "");
+            eval(tree->left->right);
             printf("; ");
-            prettyPrinter(tree->right->left, "");
+            eval(tree->right->left);
             printf(") ");
-            prettyPrinter(tree->right->right, "");
+            eval(tree->right->right);
         } else if (!strcmp(tree->type, MINUS)) {
             printf(" - ");
         } else if (!strcmp(tree->type, PLUS)) {

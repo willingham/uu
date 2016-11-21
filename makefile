@@ -26,7 +26,7 @@ env.o: env.c lexeme.c
 	gcc -Wall -g $(CFLAGS) -c env.c
 
 eval.o: eval.c lexeme.c type.c env.c
-	gcc -Wall -g $(CFLAGS) -c env.c
+	gcc -Wall -g $(CFLAGS) -c eval.c
 
 run: uu
 	./uu sample.uu
