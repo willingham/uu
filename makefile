@@ -1,4 +1,4 @@
-OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o env.o
+OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o env.o eval.o
 CFLAGS=-D uuDebug
 CFLAGS=
 uu: $(OBJS)
@@ -22,7 +22,10 @@ parser.o: parser.c error.c
 error.o: error.c
 	gcc -Wall -g $(CFLAGS) -c error.c
 
-env.o: lexeme.c
+env.o: env.c lexeme.c
+	gcc -Wall -g $(CFLAGS) -c env.c
+
+eval.o: eval.c lexeme.c type.c env.c
 	gcc -Wall -g $(CFLAGS) -c env.c
 
 run: uu
