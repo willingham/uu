@@ -23,13 +23,15 @@ void evals(Lexeme *tree, Lexeme *env) {
 Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
         if (!strcmp(tree->type, STRING)) {
-            printf("\"%s\"", tree->sval);
+            return tree;
         } else if (!strcmp(tree->type, INT)) {
-            printf("%d", tree->ival);
+            return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
-            printf("%s", tree->sval);
+            return lookup(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
-            printf("func ");
+            return evalFuncDef(tree, env);
+
+
             eval(tree->left);
             eval(tree->right->left);
             eval(tree->right->right);
