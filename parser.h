@@ -12,9 +12,10 @@ typedef struct parser {
     int line;
     Lexeme *last;
     Lexeme *pending;
+    Lexeme *tree;
 } Parser;
 
-extern Lexeme *parse(FILE *fIn, int pp);
+extern Lexeme *parse(FILE *fIn);
 
 extern int check(Parser *p, char *x);
 extern Lexeme * match(Parser *p, char *x);
@@ -58,6 +59,7 @@ extern Lexeme *forr(Parser *p);
 extern Lexeme *iff(Parser *p);
 extern Lexeme *optElse(Parser *p);
 
+extern void pretty(Lexeme *l);
 extern void prettyPrinter(Lexeme *l, char *s);
 
 #endif

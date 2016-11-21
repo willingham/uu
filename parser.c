@@ -4,7 +4,7 @@
 #include "lexer.h"
 #include "type.h"
 
-Lexeme *parse(FILE *xfile, int pp) {
+Lexeme *parse(FILE *xfile) {
     Parser *p = malloc(sizeof(Parser));
 
     p->fIn = xfile;
@@ -15,12 +15,14 @@ Lexeme *parse(FILE *xfile, int pp) {
         printf("%s\n", displayLexeme(p->pending));
         p->pending = lex(p);
     } */
-    Lexeme *l = program(p);
+    p->tree = program(p);
     //printf("%s\n%s\n%s\n", l->left->type, l->left->type, l->left->right->right->left->right->left->left->left->sval);
+
+    /*
     if (pp) {
         prettyPrinter(l, "");
-    }
-    return p->pending;
+    } */
+    return p->tree;
 }
 
 // 
@@ -358,6 +360,10 @@ void prettyPrinter(Lexeme *l, char *s) {
         prettyPrinter(l->right, temp);
     }
 }*/
+
+void pretty(Lexeme *l) {
+    prettyPrinter(l, "");
+}
 
 void prettyPrinter(Lexeme *l, char *s) {
     if (l != NULL) {
