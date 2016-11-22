@@ -89,43 +89,46 @@ Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
     Lexeme *closure = newLexeme(CLOSURE);
     setCar(closure, env);
     setCdr(closure, t);
-    insert(closure, getFuncDefName(t), env);
-    return NULL;
+    return insert(closure, getFuncDefName(t), env);
 }
 
-Lexeme *getEvaluatedValList(Lexeme *t, Lexeme *env) {
-    int i = 1;
-    Lexeme *x = t->left;
-    Lexeme *n = newLexeme(GLUE);
-    while (x != NULL) {
-    }
-    return n;
+Lexeme *evalFuncCall(Lexeme *t, Lexeme *env) {
+    Lexeme *closure = eval(getFuncCallName(t), env);
+    Lexeme *args = getFuncCallArgs(t);
+    Lexeme *params = getClosureParams(closure);
+    Lexeme *body = getClosureBody(closure);
+    Lexeme *senv = getClosureEnvironment(closure);
+    Lexeme *eargs = evalArgs(args, env);
+    Lexeme *xenv = extendEnv(senv, params, eargs);
+    return eval(body, xenv)
+
+Lexeme *evalArgs(Lexeme *t, Lexeme *env) {
+    return cons(GLUE, eval(car(t), env), evalArgs(cdr(t)), env);
 }
 
 
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
-    Lexeme *l = newLexeme(STRING);
-    l->sval = f->left;
-    return l;
+    return car(f);
 }
 
 Lexeme *getFuncCallName(Lexeme *t) {
-    return t->left;
+    return car(f);
 }
 
-Lexeme *getFuncCallParams(Lexeme *t) {
-    return t->right;
+Lexeme *getFuncCallArgs(Lexeme *t) {
+    // right is OPTPARAMLIST, then left is PARAMLIST
+    return car(cdr(t));
 }
 
 Lexeme *getClosureParams(Lexeme *t) {
-    return t->right->right->left;
+    return car(cdr(cdr(t));
 }
 
 Lexeme *getClosureBody(Lexeme *t) {
-    return t->right->right->right;
+    return cdr(cdr(cdr(t));
 }
 
 Lexeme *getClosureEnvironment(Lexeme *t) {
-    return t->left;
+    return car(t);
 }
