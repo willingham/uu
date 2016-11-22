@@ -107,7 +107,6 @@ Lexeme *evalArgs(Lexeme *t, Lexeme *env) {
 }
 
 Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
-    var result;
     Lexeme *result;
     while (t != NULL) {
         result = eval(car(t), env);
