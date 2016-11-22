@@ -92,12 +92,15 @@ Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
     insert(closure, getFuncDefName(t), env);
     return NULL;
 }
+
 Lexeme *getEvaluatedValList(Lexeme *t, Lexeme *env) {
     int i = 1;
     Lexeme *x = t->left;
     Lexeme *n = newLexeme(GLUE);
     while (x != NULL) {
-        if (
+    }
+    return n;
+}
 
 
 // helpers
