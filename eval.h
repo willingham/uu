@@ -24,7 +24,7 @@ extern Lexeme *evalArgs(Lexeme *t, Lexeme *env);
 // helpers
 extern Lexeme *getFuncDefName(Lexeme *t);
 extern Lexeme *getFuncCallName(Lexeme *t);
-extern Lexeme *getFuncCallParams(Lexeme *t);
+extern Lexeme *getFuncCallArgs(Lexeme *t);
 extern Lexeme *getClosureParams(Lexeme *t);
 extern Lexeme *getClosureBody(Lexeme *t);
 extern Lexeme *getClosureEnvironment(Lexeme *t);

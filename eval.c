@@ -100,10 +100,14 @@ Lexeme *evalFuncCall(Lexeme *t, Lexeme *env) {
     Lexeme *senv = getClosureEnvironment(closure);
     Lexeme *eargs = evalArgs(args, env);
     Lexeme *xenv = extendEnv(senv, params, eargs);
-    return eval(body, xenv)
+    return eval(body, xenv);
+}
 
 Lexeme *evalArgs(Lexeme *t, Lexeme *env) {
-    return cons(GLUE, eval(car(t), env), evalArgs(cdr(t)), env);
+    if (t == NULL) {
+        return NULL;
+    }
+    return cons(GLUE, eval(car(t), env), evalArgs(cdr(t), env));
 }
 
 Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
@@ -119,7 +123,7 @@ Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
 	//eval the left and the right hand sides
     Lexeme *left = eval(car(t),env);
     Lexeme *right = eval(cdr(t),env);
-    if (lef->type == INT && right->type == INT) {
+    if (left->type == INT && right->type == INT) {
         Lexeme *new = newLexeme(INT);
 		new->ival = left->ival + right->ival;
 		return new;
@@ -135,6 +139,8 @@ Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
         Lexeme *new = newLexeme(STRING);
 		sprintf(new->sval, "%s%s", left->sval, right->sval);
 		return new;
+    } else {
+       return NULL;
     } 
 }
 
@@ -151,7 +157,7 @@ Lexeme *getFuncDefName(Lexeme *f) {
 }
 
 Lexeme *getFuncCallName(Lexeme *t) {
-    return car(f);
+    return car(t);
 }
 
 Lexeme *getFuncCallArgs(Lexeme *t) {
@@ -160,13 +166,15 @@ Lexeme *getFuncCallArgs(Lexeme *t) {
 }
 
 Lexeme *getClosureParams(Lexeme *t) {
-    return car(cdr(cdr(t));
+    return car(cdr(cdr(t)));
 }
 
 Lexeme *getClosureBody(Lexeme *t) {
-    return cdr(cdr(cdr(t));
+    return cdr(cdr(cdr(t)));
 }
 
 Lexeme *getClosureEnvironment(Lexeme *t) {
     return car(t);
 }
+
+
