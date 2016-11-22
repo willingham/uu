@@ -83,3 +83,46 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
     }
     return NULL;
 }
+
+
+Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
+    Lexeme *closure = newLexeme(CLOSURE);
+    setCar(closure, env);
+    setCdr(closure, t);
+    insert(closure, getFuncDefName(t), env);
+    return NULL;
+}
+Lexeme *getEvaluatedValList(Lexeme *t, Lexeme *env) {
+    int i = 1;
+    Lexeme *x = t->left;
+    Lexeme *n = newLexeme(GLUE);
+    while (x != NULL) {
+        if (
+
+
+// helpers
+Lexeme *getFuncDefName(Lexeme *f) {
+    Lexeme *l = newLexeme(STRING);
+    l->sval = f->left;
+    return l;
+}
+
+Lexeme *getFuncCallName(Lexeme *t) {
+    return t->left;
+}
+
+Lexeme *getFuncCallParams(Lexeme *t) {
+    return t->right;
+}
+
+Lexeme *getClosureParams(Lexeme *t) {
+    return t->right->right->left;
+}
+
+Lexeme *getClosureBody(Lexeme *t) {
+    return t->right->right->right;
+}
+
+Lexeme *getClosureEnvironment(Lexeme *t) {
+    return t->left;
+}

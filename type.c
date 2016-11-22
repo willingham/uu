@@ -3,6 +3,7 @@
 // env types
 char *ENV = "ENV";
 char *TABLE = "TABLE";
+char *CLOSURE = "CLOSURE";
 
 // higher level types
 char *EXPRESSIONLIST = "EXPRESSIONLIST";
@@ -15,6 +16,8 @@ char *PRIMARY = "PRIMARY";
 char *OPERATOR = "OPERATOR";
 char *LITERAL = "LITERAL";
 char *FUNCDEF = "FUNCDEF";
+char *FUNCCALL = "FUNCCALL";
+char *ARRAYACCESS = "ARRAYACCESS";
 char *BLOCK = "BLOCK";
 
 // lower level types

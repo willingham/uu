@@ -19,7 +19,15 @@ extern Lexeme *evalOptParamList(Lexeme *t, Lexeme *env);
 extern Lexeme *evalOptElse(Lexeme *t, Lexeme *env);
 extern Lexeme *evalFor(Lexeme *t, Lexeme *env);
 extern Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env);
+extern Lexeme *evalArgs(Lexeme *t, Lexeme *env);
 
+// helpers
+extern Lexeme *getFuncDefName(Lexeme *t);
+extern Lexeme *getFuncCallName(Lexeme *t);
+extern Lexeme *getFuncCallParams(Lexeme *t);
+extern Lexeme *getClosureParams(Lexeme *t);
+extern Lexeme *getClosureBody(Lexeme *t);
+extern Lexeme *getClosureEnvironment(Lexeme *t);
 
 
 #endif

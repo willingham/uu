@@ -4,6 +4,7 @@
 // env types
 extern char *ENV;
 extern char *TABLE;
+extern char *CLOSURE;
 
 // higher level types
 extern char *EXPRESSIONLIST;
@@ -16,6 +17,8 @@ extern char *PRIMARY;
 extern char *OPERATOR;
 extern char *LITERAL;
 extern char *FUNCDEF;
+extern char *FUNCCALL;
+extern char *ARRAYACCESS;
 extern char *BLOCK;
 
 // lower level types

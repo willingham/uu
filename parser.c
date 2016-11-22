@@ -197,10 +197,12 @@ Lexeme *primary(Parser *p) {
             match(p, OSB);
             y = literal(p);
             match(p, CSB);
+            return cons(ARRAYACCESS, x, y);
         } else if(check(p, OP)) {
             match(p, OP);
             y = optParamList(p);
             match(p, CP);
+            return cons(FUNCCALL, x, y);
         }
         return cons(PRIMARY, x, y);
     } else if(operatorPending(p)) {
