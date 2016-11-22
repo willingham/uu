@@ -115,6 +115,29 @@ Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
     return result;
 }
 
+Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
+	//eval the left and the right hand sides
+    Lexeme *left = eval(car(t),env);
+    Lexeme *right = eval(cdr(t),env);
+    if (lef->type == INT && right->type == INT) {
+        Lexeme *new = newLexeme(INT);
+		new->ival = left->ival + right->ival;
+		return new;
+    } else if (left->type == INT && right->type == STRING) {
+        Lexeme *new = newLexeme(STRING);
+		sprintf(new->sval, "%d%s", left->ival, right->sval);
+		return new;
+    } else if (left->type == STRING && right->type == INT) {
+        Lexeme *new = newLexeme(STRING);
+		sprintf(new->sval, "%s%d", left->sval, right->ival);
+		return new;
+    } else if (left->type == STRING && right->type == STRING) {
+        Lexeme *new = newLexeme(STRING);
+		sprintf(new->sval, "%s%s", left->sval, right->sval);
+		return new;
+    } 
+}
+
 
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
