@@ -138,6 +138,12 @@ Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
     } 
 }
 
+Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
+    Lexeme *value = eval(cdr(t), env);
+    insert(car(t), value, env);
+    return value;
+}
+
 
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
