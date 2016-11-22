@@ -106,6 +106,16 @@ Lexeme *evalArgs(Lexeme *t, Lexeme *env) {
     return cons(GLUE, eval(car(t), env), evalArgs(cdr(t)), env);
 }
 
+Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
+    var result;
+    Lexeme *result;
+    while (t != NULL) {
+        result = eval(car(t), env);
+        t = cdr(t);
+    }
+    return result;
+}
+
 
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
