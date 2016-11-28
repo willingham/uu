@@ -123,7 +123,9 @@ Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
 		sprintf(new->sval, "%s%s", left->sval, right->sval);
 		return new;
     } else {
-       return NULL;
+        error("Can only add ints or strings.");
+        exit(1);
+        return NULL;
     } 
 }
 
@@ -136,7 +138,39 @@ Lexeme *evalMinus(Lexeme *t, Lexeme *env) {
 		new->ival = left->ival - right->ival;
 		return new;
     } else {
-       return NULL;
+        error("Can only subtract ints.");
+        exit(1);
+        return NULL;
+    } 
+}
+
+Lexeme *evalDivide(Lexeme *t, Lexeme *env) {
+	//eval the left and the right hand sides
+    Lexeme *left = eval(car(t),env);
+    Lexeme *right = eval(cdr(t),env);
+    if (left->type == INT && right->type == INT) {
+        Lexeme *new = newLexeme(INT);
+		new->ival = left->ival / right->ival;
+		return new;
+    } else {
+        error("Can only divide ints.");
+        exit(1);
+        return NULL;
+    } 
+}
+
+Lexeme *evalMultiply(Lexeme *t, Lexeme *env) {
+	//eval the left and the right hand sides
+    Lexeme *left = eval(car(t),env);
+    Lexeme *right = eval(cdr(t),env);
+    if (left->type == INT && right->type == INT) {
+        Lexeme *new = newLexeme(INT);
+		new->ival = left->ival * right->ival;
+		return new;
+    } else {
+        error("Can only multiply ints.");
+        exit(1);
+        return NULL;
     } 
 }
 
@@ -184,6 +218,8 @@ int isTrue(Lexeme *t) {
     if (t == NULL) {
         return 0;
     } else if (!strcmp(t->type, BAD)) {
+        return 0;
+    } else if (!strcmp(t->type, INT) && t->ival == 0) {
         return 0;
     } else {
         return 1;
