@@ -4,23 +4,6 @@
 #include "type.h"
 #include "env.h"
 
-/*
-void evals(Lexeme *tree, Lexeme *env) {
-    char *type = tree->type;
-    if (!strcmp(type, INT)) {
-    } else if (!strcmp(type, STRING )) {
-    } else if (!strcmp(type, VARIABLE)) {
-    } else if (!strcmp(type, PLUS)) {
-    } else if (!strcmp(type, MINUS)) {
-    } else if (!strcmp(type, TIMES)) {
-    } else if (!strcmp(type, DIVIDE)) {
-    } else if (!strcmp(type, GT)) {
-    } else if (!strcmp(type, LT)) {
-    } else if (!strcmp(type, GTE)) {
-    } else if (!strcmp(type, LTE)) {
-    }
-} */
-
 Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
         if (!strcmp(tree->type, STRING)) {
