@@ -127,12 +127,32 @@ Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
     } 
 }
 
+Lexeme *evalMinus(Lexeme *t, Lexeme *env) {
+	//eval the left and the right hand sides
+    Lexeme *left = eval(car(t),env);
+    Lexeme *right = eval(cdr(t),env);
+    if (left->type == INT && right->type == INT) {
+        Lexeme *new = newLexeme(INT);
+		new->ival = left->ival - right->ival;
+		return new;
+    } else {
+       return NULL;
+    } 
+}
+
 Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
     Lexeme *value = eval(cdr(t), env);
     insert(car(t), value, env);
     return value;
 }
 
+Lexeme *evalWhile(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    while (isTrue(eval(car(t), env))) {
+        result = eval(cdr(t), env);
+    }
+    return result;
+}
 
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
@@ -160,4 +180,12 @@ Lexeme *getClosureEnvironment(Lexeme *t) {
     return car(t);
 }
 
-
+int isTrue(Lexeme *t) {
+    if (t == NULL) {
+        return 0;
+    } else if (!strcmp(t->type, BAD)) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
