@@ -204,7 +204,7 @@ Lexeme *primary(Parser *p) {
             match(p, CP);
             return cons(FUNCCALL, x, y);
         }
-        //return cons(PRIMARY, x, y);
+        return cons(PRIMARY, x, y);
     } else if(operatorPending(p)) {
         x = operator(p);
         y = primary(p);
@@ -380,6 +380,14 @@ void prettyPrinter(Lexeme *l, char *s) {
             prettyPrinter(l->left, "");
             prettyPrinter(l->right->left, "");
             prettyPrinter(l->right->right, "");
+        } else if (!strcmp(l->type, FUNCCALL)) {
+            prettyPrinter(l->left, "");
+            prettyPrinter(l->right, "");
+        } else if (!strcmp(l->type, ARRAYACCESS)) {
+            prettyPrinter(l->left, "");
+            printf("[");
+            prettyPrinter(l->right, "");
+            printf("]\n");
         } else if (!strcmp(l->type, EXPRESSIONLIST)) {
             prettyPrinter(l->left, "");
             if (!strcmp(l->left->type, EXPR)) {

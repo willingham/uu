@@ -18,6 +18,8 @@ int main(int argc, char **argv, char **env) {
     }
     
     Lexeme *parseTree = parse(fopen(fname, "r"));
-    pretty(parseTree);
+    if (pp) {
+        pretty(parseTree);
+    }
     parseTree = NULL;
 }
