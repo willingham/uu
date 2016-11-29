@@ -28,8 +28,13 @@ Lexeme *match(Parser *p, char *x) {
     if (check(p, x)) {
         return advance(p);
     } else {
-        error("match error");
-        printf("Line: %d, PendingType: %s, TypeCheckedFor: %s\n", p->line, p->pending->type, x);
+        error("FATAL: Match Error");
+        printf("   Line: %d, PendingType: %s, TypeCheckedFor: %s\n", p->line, p->pending->type, x);
+        if (!strcmp(x, SEMI)) {
+            printf("   Expected ';' after expression.\n");
+        } else if (!strcmp(x, CP)) {
+            printf("   Expected ')' after ID or Parameter list.\n");
+        }
         exit(1);
     }
 }

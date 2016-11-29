@@ -146,7 +146,7 @@ Lexeme *evalMinus(Lexeme *t, Lexeme *env) {
 		new->ival = left->ival - right->ival;
 		return new;
     } else {
-        error("Can only subtract ints.");
+        error("FATAL: Can only subtract ints.");
         exit(1);
         return NULL;
     } 

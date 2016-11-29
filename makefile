@@ -33,3 +33,57 @@ run: uu
 
 clean:
 	rm -f ./*.o ./uu
+
+error1:
+	cat error1.uu
+
+error1x:
+	./uu error1.uu
+
+error2:
+	cat error2.uu
+
+error2x:
+	./uu error2.uu
+
+error3:
+	cat error3.uu
+
+error3x:
+	./uu error3.uu
+
+arrays:
+	cat arrays.uu
+
+arraysx:
+	./uu arrays.uu
+
+conditionals:
+	cat conditionals.uu
+
+conditionalsx:
+	./uu conditionals.uu
+
+recursion:
+	cat recursion.uu
+
+recursionx:
+	./uu recursion.uu
+
+iteration:
+	cat iteration.uu
+
+iterationx:
+	./uu iteration.uu
+
+functions:
+	cat functions.uu
+
+functionsx:
+	./uu functions.uu
+
+dictionary:
+	cat dictionary.uu
+
+dictionaryx:
+	./uu dictionary.uu
