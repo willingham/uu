@@ -8,6 +8,7 @@
 #include "error.h"
 
 void initEnv(Lexeme *env);
+void initStdlib(Lexeme *global);
 Lexeme *printUU(Lexeme *args);
 Lexeme *printlnUU(Lexeme *args);
 Lexeme *arrayUU(Lexeme *args);
@@ -28,9 +29,11 @@ int main(int argc, char **argv, char **env) {
     Lexeme *parseTree = parse(fopen(fname, "r"));
     if (pp) {
         pretty(parseTree);
+        exit(0);
     }
     Lexeme *global = createEnv();
     initEnv(global);
+    initStdlib(global);
     eval(parseTree, global);
     parseTree = NULL;
 }
@@ -53,6 +56,11 @@ void initEnv(Lexeme *env) {
     val = newLexeme(BUILTIN);
     val->fp = arrayUU;
     insert(var, val, env);
+}
+
+void initStdlib(Lexeme *global) {
+    Lexeme *parseTree = parse(fopen("ds.uu", "r"));
+    eval(parseTree, global);
 }
 
 Lexeme *printUU(Lexeme *args) {
@@ -100,3 +108,4 @@ Lexeme *arrayUU(Lexeme *args) {
         return arr;
     }
 }
+

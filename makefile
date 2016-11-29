@@ -87,3 +87,34 @@ dictionary:
 
 dictionaryx:
 	./dpl dictionary.uu
+
+problem:
+	cat problem.uu
+
+problemx:
+	./dpl problem.uu
+demo: uu
+	-make error1
+	-make error1x
+	-make error2
+	-make error2x
+	-make error3
+	-make error3x
+	-make arrays
+	-make arraysx
+	-make conditionals
+	-make conditionalsx
+	-make recursion
+	-make recursionx
+	-make iteration
+	-make iterationx
+	-make functions
+	-make functionsx
+	-make dictionary
+	-make dictionaryx
+	echo ******DEMO STUFF******
+	cat consTest.uu
+	./dpl consTest.uu
+	cat stackTest.uu
+	./dpl stackTest.uu
+

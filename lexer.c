@@ -24,6 +24,11 @@ Lexeme *lex(Parser *p) {
         case '>':
             return newLexeme(GT);
         case '<':
+            ch = getChar(p);
+            if (ch == '=') {
+                return newLexeme(LTE);
+            }
+            ungetc(ch, p->fIn);
             return newLexeme(LT);
         case '&':
             return newLexeme(AND);
