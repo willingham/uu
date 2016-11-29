@@ -117,4 +117,6 @@ demo: uu
 	./dpl consTest.uu
 	cat stackTest.uu
 	./dpl stackTest.uu
+	cat print.uu
+	./dpl print.uu
 

@@ -404,7 +404,9 @@ void prettyPrinter(Lexeme *l, char *s) {
         } else if (!strcmp(l->type, FUNCDEF)) {
             printf("func ");
             prettyPrinter(l->left, "");
+            printf("(");
             prettyPrinter(l->right->left, "");
+            printf(")");
             prettyPrinter(l->right->right, "");
         } else if (!strcmp(l->type, FUNCCALL)) {
             prettyPrinter(l->left, "");
