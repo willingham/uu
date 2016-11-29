@@ -10,18 +10,8 @@ Lexeme *parse(FILE *xfile) {
     p->fIn = xfile;
     p->line = 1;
     p->pending = lex(p);
-    /*
-    while(strcmp(p->pending->type, ENDOFFILE) != 0) {
-        printf("%s\n", displayLexeme(p->pending));
-        p->pending = lex(p);
-    } */
     p->tree = program(p);
-    //printf("%s\n%s\n%s\n", l->left->type, l->left->type, l->left->right->right->left->right->left->left->left->sval);
 
-    /*
-    if (pp) {
-        prettyPrinter(l, "");
-    } */
     return p->tree;
 }
 
@@ -196,7 +186,14 @@ Lexeme *primary(Parser *p) {
         match(p, CP);
         return x;
     } else if(lambdaPending(p)) {
-        return lambda(p);
+        x = lambda(p);
+        if (check(p, OP)) {
+            match(p, OP);
+            y = optParamList(p);
+            match(p, CP);
+            return cons(FUNCCALL, x, y);
+        }
+        return x;
     } else if(check(p, ID)) {
         x = match(p, ID);
         if(check(p, OSB)) {

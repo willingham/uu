@@ -24,7 +24,8 @@
                     | lambda               
                     | ID                        // variable/func name
                     | ID OSB expr CSB           // access array
-                    | primary OP optParamList CP     // call function
+                    | ID OP optIdList CP     // call function
+                    | lambda OP optIdList CP
 
            operator : MINUS       // -
                     | PLUS        // +

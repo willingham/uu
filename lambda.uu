@@ -2,3 +2,5 @@ func lamTest(lam) {
     lam(5);
 }
 println(lamTest(lambda(x) { x + 2;}));
+
+println(lambda(x) {x + 3;} (6));
