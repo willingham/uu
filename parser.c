@@ -159,8 +159,10 @@ Lexeme *expr(Parser *p) {
     if(operatorPending(p)) {
         y = operator(p);
         z = expr(p);
+        return cons(EXPR, x, cons(GLUE, y, z));
     }
-    return cons(EXPR, x, cons(GLUE, y, z));
+    //return cons(EXPR, x, cons(GLUE, y, z));
+    return cons(EXPR, x, NULL);
 }
 
 Lexeme *optParamList(Parser *p) {
@@ -204,11 +206,11 @@ Lexeme *primary(Parser *p) {
             match(p, CP);
             return cons(FUNCCALL, x, y);
         }
-        return cons(PRIMARY, x, y);
-    } else if(operatorPending(p)) {
-        x = operator(p);
-        y = primary(p);
-        return cons(PRIMARY, x, y);
+        return x;
+    //} else if(operatorPending(p)) {
+    //    x = operator(p);
+    //    y = primary(p);
+    //    return cons(PRIMARY, x, y);
     } else {
         error("Primary not found.");
         exit(1);
@@ -313,7 +315,7 @@ Lexeme *forr(Parser *p) {
     Lexeme *x, *y, *z, *a = NULL;
     match(p, FOR);
     match(p, OP);
-    x = match(p, ID);
+    x = expr(p);
     match(p, SEMI);
     y = expr(p);
     match(p, SEMI);

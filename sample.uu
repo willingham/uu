@@ -1,6 +1,5 @@
 func test () {
-    foo();
-    wer = "foo";
+    wer = 5;
     if(wer == 1) {
         print("wer");
     } else if (wer == 2) {
@@ -10,7 +9,8 @@ func test () {
     while(wer == 1) {
         wer = wer + 1;
     }
-    for(i; i < 4321; i = i + 1) {
+    for(i = 4309; i < 4321; i = i + 1) {
         print(i);
     }
 }
+test();

@@ -25,7 +25,6 @@
                     | ID                        // variable/func name
                     | ID OSB literal CSB        // access array
                     | ID OP optParamList CP     // call function
-                    | operator primary          // combine primaries
 
            operator : MINUS       // -
                     | PLUS        // +
@@ -55,7 +54,7 @@
 
               while : WHILE OP expr CP block
 
-                for : FOR OP ID SEMI expr SEMI expr CP bock
+                for : FOR OP expr SEMI expr SEMI expr CP bock
         
                  if : IF OP expr CP block optElse
         

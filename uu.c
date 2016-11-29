@@ -3,6 +3,8 @@
 #include "lexeme.h"
 #include "lexer.h"
 #include "parser.h"
+#include "env.h"
+#include "eval.h"
 
 int main(int argc, char **argv, char **env) {
     int pp = 0;  //pretty printer variable
@@ -21,5 +23,7 @@ int main(int argc, char **argv, char **env) {
     if (pp) {
         pretty(parseTree);
     }
+    Lexeme *global = createEnv();
+    eval(parseTree, global);
     parseTree = NULL;
 }

@@ -16,6 +16,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
             return evalFuncDef(tree, env);
+        } else if (!strcmp(tree->type, FUNCCALL)) {
+            return evalFuncCall(tree, env);
         } else if (!strcmp(tree->type, EXPRESSIONLIST)) {
             return evalExpressionList(tree, env);
         } else if (!strcmp(tree->type, EXPR)) {
@@ -76,7 +78,7 @@ Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
 Lexeme *evalFuncCall(Lexeme *t, Lexeme *env) {
     Lexeme *closure = eval(getFuncCallName(t), env);
     Lexeme *args = getFuncCallArgs(t);
-    Lexeme *params = getClosureParams(closure);
+    Lexeme *params = getClosureParams(closure)->left;
     Lexeme *body = getClosureBody(closure);
     Lexeme *senv = getClosureEnvironment(closure);
     Lexeme *eargs = evalArgs(args, env);
@@ -175,6 +177,7 @@ Lexeme *evalMultiply(Lexeme *t, Lexeme *env) {
 Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
     Lexeme *value = eval(cdr(t), env);
     insert(car(t), value, env);
+    printf("herre\n");
     return value;
 }
 
@@ -200,12 +203,13 @@ Lexeme *evalOptElse(Lexeme *t, Lexeme *env) {
     if (t == NULL) {
         return NULL;
     } else {
-        return eval(t, env);
+        return eval(t->left, env);
     }
 }
 
 Lexeme *evalFor(Lexeme *t, Lexeme *env) {
     Lexeme *result = NULL;
+    eval(car(car(t)), env);
     while (isTrue(eval(cdr(car(t)), env))) {
         result = eval(t->right->right, env);
         eval(t->right->left, env);
@@ -223,12 +227,11 @@ Lexeme *evalExpressionList(Lexeme *t, Lexeme *env) {
 }
 
 Lexeme *evalExpr(Lexeme *t, Lexeme *env) {
-    Lexeme *result = NULL;
-    while (t != NULL) {
-        result = eval(t->left, env);
-        t = t->right;
+    if (t->right == NULL) {
+        return eval(t->left, env);
+    } else {
+        return evalSimpleOp(cons(t->right->left->type, t->left, t->right->right), env); 
     }
-    return result;
 }
 
 Lexeme *evalLambda(Lexeme *t, Lexeme *env) {
@@ -241,6 +244,11 @@ Lexeme *evalLambda(Lexeme *t, Lexeme *env) {
 }
 
 Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
+    t->right = eval(t->right, env);
+    if (!strcmp(t->type, EQUALS)) {
+        return evalAssign(t, env);
+    }
+    t->left = eval(t->left, env);
     Lexeme *result = newLexeme(INT);
     if (!strcmp(t->type, NOT)) {
     } else if (!strcmp(t->type, GT)) {
@@ -315,6 +323,14 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
         } else {
             result->ival = 0;
         }
+    } else if (!strcmp(t->type, PLUS)) {
+        return evalPlus(t, env);
+    } else if (!strcmp(t->type, MINUS)) {
+        return evalMinus(t, env);
+    } else if (!strcmp(t->type, DIVIDE)) {
+        return evalDivide(t, env);
+    } else if (!strcmp(t->type, MULTIPLY)) {
+        return evalMultiply(t, env);
     } else {
         return NULL;
     }

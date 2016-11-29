@@ -7,6 +7,7 @@
 
 extern Lexeme *eval(Lexeme *tree, Lexeme *env);
 extern Lexeme *evalFuncDef(Lexeme *t, Lexeme *env);
+extern Lexeme *evalFuncCall(Lexeme *t, Lexeme *env);
 extern Lexeme *evalExpressionList(Lexeme *t, Lexeme *env);
 extern Lexeme *evalExpr(Lexeme *t, Lexeme *env);
 extern Lexeme *evalParamList(Lexeme *t, Lexeme *env);

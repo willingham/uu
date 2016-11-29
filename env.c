@@ -3,7 +3,7 @@
 #include "lexeme.h"
 #include "type.h"
 
-Lexeme *create() {
+Lexeme *createEnv() {
     return extendEnv(NULL, NULL, NULL);
 }
 
