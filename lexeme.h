@@ -11,11 +11,12 @@ typedef struct lexeme {
 
     char *sval;
     int ival;
+    struct lexeme *(*fp)(struct lexeme *);
 
     struct lexeme *left;
     struct lexeme *right;
 
-    struct lexeme *array;
+    struct lexeme **array;
 
 } Lexeme;
 

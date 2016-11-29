@@ -12,6 +12,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return tree;
         } else if (!strcmp(tree->type, INT)) {
             return tree;
+        } else if (!strcmp(tree->type, ARRAY)) {
+            return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
@@ -60,6 +62,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, EQUALS)) {
             return evalAssign(tree, env);
+        } else if (!strcmp(tree->type, ARRAYACCESS)) {
+            return evalArrayAccess(tree, env);
         } else {
             printf("Type: %s not evaluated.\n", tree->type);
         } 
@@ -78,10 +82,14 @@ Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
 Lexeme *evalFuncCall(Lexeme *t, Lexeme *env) {
     Lexeme *closure = eval(getFuncCallName(t), env);
     Lexeme *args = getFuncCallArgs(t);
-    Lexeme *params = getClosureParams(closure)->left;
+    Lexeme *eargs = evalArgs(args, env);
+    if (!strcmp(closure->type, BUILTIN)) {
+        return closure->fp(eargs);
+    }
+
+    Lexeme *params = getClosureParams(closure);
     Lexeme *body = getClosureBody(closure);
     Lexeme *senv = getClosureEnvironment(closure);
-    Lexeme *eargs = evalArgs(args, env);
     Lexeme *xenv = extendEnv(senv, params, eargs);
     return eval(body, xenv);
 }
@@ -176,8 +184,18 @@ Lexeme *evalMultiply(Lexeme *t, Lexeme *env) {
 
 Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
     Lexeme *value = eval(cdr(t), env);
-    insert(car(t), value, env);
-    printf("herre\n");
+    if (!strcmp(t->left->type, ARRAYACCESS)) {
+        Lexeme *temp = evalArrayAccess(t->left, env);
+        temp->type = value->type;
+        temp->sval = value->sval;
+        temp->ival = value->ival;
+        temp->fp = value->fp;
+        temp->left = value->left;
+        temp->right = value->right;
+        temp->array = value->array;
+    } else {
+        insert(car(t), value, env);
+    }
     return value;
 }
 
@@ -337,6 +355,20 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
     return result;
 }
 
+Lexeme *evalArrayAccess(Lexeme *t, Lexeme *env) {
+    Lexeme *temp = lookupEnv(t->left, env);
+    if (strcmp(temp->type, ARRAY)) {
+        error("Invalid array.\n");
+        exit(1);
+    } 
+    Lexeme *index = eval(t->right, env);
+    if (strcmp(index->type, INT)) {
+        error("Must access array with INT.\n");
+        exit(1);
+    }
+    return temp->array[index->ival];
+}
+
 // helpers
 Lexeme *getFuncDefName(Lexeme *f) {
     return car(f);
@@ -352,7 +384,7 @@ Lexeme *getFuncCallArgs(Lexeme *t) {
 }
 
 Lexeme *getClosureParams(Lexeme *t) {
-    return car(cdr(cdr(t)));
+    return t->right->right->left->left;
 }
 
 Lexeme *getClosureBody(Lexeme *t) {

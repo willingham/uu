@@ -23,8 +23,8 @@
                     | OP expr CP                // nest expressions
                     | lambda               
                     | ID                        // variable/func name
-                    | ID OSB literal CSB        // access array
-                    | ID OP optParamList CP     // call function
+                    | ID OSB expr CSB           // access array
+                    | primary OP optParamList CP     // call function
 
            operator : MINUS       // -
                     | PLUS        // +
@@ -43,7 +43,13 @@
             literal : INT
                     | STRING
  
-            funcDef : FUNC ID OP optParamList CP block
+            funcDef : FUNC ID OP optIdList CP block
+
+          optIdList : *empty*
+                    | idList
+
+             idList : ID
+                    | ID COMMA idList
   
              lambda : LAMBDA OP optParamList CP block
 

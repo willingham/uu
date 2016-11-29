@@ -10,7 +10,7 @@ func test () {
         wer = wer + 1;
     }
     for(i = 4309; i < 4321; i = i + 1) {
-        print(i);
+        println(i);
     }
 }
 test();

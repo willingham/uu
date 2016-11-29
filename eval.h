@@ -26,6 +26,7 @@ extern Lexeme *evalMinus(Lexeme *t, Lexeme *env);
 extern Lexeme *evalDivide(Lexeme *t, Lexeme *env);
 extern Lexeme *evalMultiply(Lexeme *t, Lexeme *env);
 extern Lexeme *evalAssign(Lexeme *t, Lexeme *env);
+extern Lexeme *evalArrayAccess(Lexeme *t, Lexeme *env);
 
 // helpers
 extern Lexeme *getFuncDefName(Lexeme *t);

@@ -39,6 +39,7 @@ extern int whileePending(Parser *p);
 extern int forrPending(Parser *p);
 extern int iffPending(Parser *p);
 extern int optElsePending(Parser *p);
+extern int idListPending(Parser *p);
 
 // lhs grammar functions
 extern Lexeme *program(Parser *p);
@@ -58,6 +59,8 @@ extern Lexeme *whilee(Parser *p);
 extern Lexeme *forr(Parser *p);
 extern Lexeme *iff(Parser *p);
 extern Lexeme *optElse(Parser *p);
+extern Lexeme *idList(Parser *p);
+extern Lexeme *optIdList(Parser *p);
 
 extern void pretty(Lexeme *l);
 extern void prettyPrinter(Lexeme *l, char *s);

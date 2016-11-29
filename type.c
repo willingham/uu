@@ -4,6 +4,7 @@
 char *ENV = "ENV";
 char *TABLE = "TABLE";
 char *CLOSURE = "CLOSURE";
+char *BUILTIN = "BUILTIN";
 
 // higher level types
 char *EXPRESSIONLIST = "EXPRESSIONLIST";
@@ -17,8 +18,11 @@ char *OPERATOR = "OPERATOR";
 char *LITERAL = "LITERAL";
 char *FUNCDEF = "FUNCDEF";
 char *FUNCCALL = "FUNCCALL";
+char *ARRAY = "ARRAY";
 char *ARRAYACCESS = "ARRAYACCESS";
 char *BLOCK = "BLOCK";
+char *OPTIDLIST = "OPTIDLIST";
+char *IDLIST = "IDLIST";
 
 // lower level types
 char *ID = "ID";

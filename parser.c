@@ -71,6 +71,10 @@ int paramListPending(Parser *p) {
     return exprPending(p);
 }
 
+int idListPending(Parser *p) {
+    return check(p, ID);
+}
+
 int primaryPending(Parser *p) {
     return literalPending(p) || check(p, OP) || \
            lambdaPending(p) || check(p, ID) || operatorPending(p);
@@ -175,7 +179,7 @@ Lexeme *optParamList(Parser *p) {
 Lexeme *paramList(Parser *p) {
     Lexeme *x, *y = NULL;
     x = expr(p);
-    if(exprPending(p)) {
+    if(check(p, COMMA)) {
         match(p, COMMA);
         y = paramList(p);
     }
@@ -197,7 +201,7 @@ Lexeme *primary(Parser *p) {
         x = match(p, ID);
         if(check(p, OSB)) {
             match(p, OSB);
-            y = literal(p);
+            y = expr(p);
             match(p, CSB);
             return cons(ARRAYACCESS, x, y);
         } else if(check(p, OP)) {
@@ -266,17 +270,35 @@ Lexeme *funcDef(Parser *p) {
     match(p, FUNC);
     x = match(p, ID);
     match(p, OP);
-    y = optParamList(p);
+    y = optIdList(p);
     match(p, CP);
     z = block(p);
     return cons(FUNCDEF, x, cons(GLUE, y, z));
+}
+
+Lexeme *optIdList(Parser *p) {
+    Lexeme *x = newLexeme(OPTIDLIST);
+    if (idListPending(p)) {
+        x->left = idList(p);
+    }
+    return x;
+}
+
+Lexeme *idList(Parser *p) {
+    Lexeme *x, *y = NULL;
+    x = match(p, ID);
+    if (check(p, COMMA)) {
+        match(p, COMMA);
+        y = idList(p);
+    }
+    return cons(IDLIST, x, y);
 }
 
 Lexeme *lambda(Parser *p) {
     Lexeme *x, *y = NULL;
     match(p, LAMBDA);
     match(p, OP);
-    x = optParamList(p);
+    x = optIdList(p);
     match(p, CP);
     y = block(p);
     return cons(LAMBDA, x, y);
@@ -400,8 +422,10 @@ void prettyPrinter(Lexeme *l, char *s) {
         } else if (!strcmp(l->type, EXPR)) {
             prettyPrinter(l->left, "");
             printf(" ");
-            prettyPrinter(l->right->left, "");
-            prettyPrinter(l->right->right, "");
+            if (l->right != NULL) {
+                prettyPrinter(l->right->left, "");
+                prettyPrinter(l->right->right, "");
+            }
         } else if (!strcmp(l->type, PARAMLIST)) {
             prettyPrinter(l->left, "");
             if (l->right) {
