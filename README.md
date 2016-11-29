@@ -69,4 +69,4 @@ test();
 
 ## Grammar
 This is the grammar for the uu language.
-![alt tag](https://raw.githubusercontent.com/thwillingham/uu/main/image.png)
+![alt tag](https://github.com/thwillingham/uu/blob/master/grammar.png)
