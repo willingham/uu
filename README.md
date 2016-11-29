@@ -12,7 +12,7 @@ The double u programming language.
   ```sh
   make clean
   make
-  dbl <your input file>
+  dpl <your input file>
   ```
  
 ## Test functions
