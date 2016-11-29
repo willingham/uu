@@ -197,11 +197,10 @@ Lexeme *evalIf(Lexeme *t, Lexeme *env) {
 }
 
 Lexeme *evalOptElse(Lexeme *t, Lexeme *env) {
-    Lexeme *result = NULL;
     if (t == NULL) {
         return NULL;
     } else {
-        result = eval(t, env);
+        return eval(t, env);
     }
 }
 
@@ -305,30 +304,21 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             return NULL;
         }
     } else if (!strcmp(t->type, AND)) {
-        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
-            if (isTrue(t->left->ival) && isTrue(t->right->ival)) {
-                result->ival = 1;
-            } else {
-                result->ival = 0;
-            }
+        if (isTrue(t->left) && isTrue(t->right)) {
+            result->ival = 1;
         } else {
-            error("Can only compare INTs.");
-            exit(1);
-            return NULL;
+            result->ival = 0;
         }
     } else if (!strcmp(t->type, OR)) {
-        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
-            if (isTrue(t->left->ival) || isTrue(t->right->ival)) {
-                result->ival = 1;
-            } else {
-                result->ival = 0;
-            }
+        if (isTrue(t->left) || isTrue(t->right)) {
+            result->ival = 1;
         } else {
-            error("Can only compare INTs.");
-            exit(1);
-            return NULL;
+            result->ival = 0;
         }
+    } else {
+        return NULL;
     }
+    return result;
 }
 
 // helpers

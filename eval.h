@@ -20,6 +20,11 @@ extern Lexeme *evalOptElse(Lexeme *t, Lexeme *env);
 extern Lexeme *evalFor(Lexeme *t, Lexeme *env);
 extern Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env);
 extern Lexeme *evalArgs(Lexeme *t, Lexeme *env);
+extern Lexeme *evalPlus(Lexeme *t, Lexeme *env);
+extern Lexeme *evalMinus(Lexeme *t, Lexeme *env);
+extern Lexeme *evalDivide(Lexeme *t, Lexeme *env);
+extern Lexeme *evalMultiply(Lexeme *t, Lexeme *env);
+extern Lexeme *evalAssign(Lexeme *t, Lexeme *env);
 
 // helpers
 extern Lexeme *getFuncDefName(Lexeme *t);
