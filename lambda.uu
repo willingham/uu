@@ -1,2 +1,4 @@
-x = lambda(x) { x + 2;};
-println(x(5));
+func lamTest(lam) {
+    lam(5);
+}
+println(lamTest(lambda(x) { x + 2;}));
