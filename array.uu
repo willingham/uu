@@ -1,0 +1,5 @@
+a = array(3);
+a[0] = "hello";
+a[1] = ", ";
+a[2] = "world";
+println(a[0], a[1], a[2]);

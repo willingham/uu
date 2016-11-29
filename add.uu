@@ -1,0 +1,4 @@
+func plus2(n) {
+    n + 2;
+}
+println(plus2(5));
