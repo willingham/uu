@@ -324,8 +324,10 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             } else {
                 result->ival = 0;
             }
+        } else if (!strcmp(t->left->type, STRING) && !strcmp(t->right->type, STRING)) {
+            result->ival = !strcmp(t->left->sval, t->right->sval);
         } else {
-            error("Can only compare INTs.");
+            error("Invalid comparison.");
             exit(1);
             return NULL;
         }
