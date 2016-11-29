@@ -28,6 +28,7 @@ extern Lexeme *getFuncCallArgs(Lexeme *t);
 extern Lexeme *getClosureParams(Lexeme *t);
 extern Lexeme *getClosureBody(Lexeme *t);
 extern Lexeme *getClosureEnvironment(Lexeme *t);
+extern int isTrue(Lexeme *t);
 
 
 #endif

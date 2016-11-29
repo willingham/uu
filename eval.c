@@ -4,6 +4,7 @@
 #include "type.h"
 #include "env.h"
 #include "type.h"
+#include "error.h"
 
 Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
@@ -32,13 +33,13 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
         } else if (!strcmp(tree->type, FOR)) {
             return evalFor(tree, env);
         } else if (!strcmp(tree->type, MINUS)) {
-            return evalSimpleOp(tree, env);
+            return evalMinus(tree, env);
         } else if (!strcmp(tree->type, PLUS)) {
-            return evalSimpleOp(tree, env);
+            return evalPlus(tree, env);
         } else if (!strcmp(tree->type, DIVIDE)) {
-            return evalSimpleOp(tree, env);
+            return evalDivide(tree, env);
         } else if (!strcmp(tree->type, MULTIPLY)) {
-            return evalSimpleOp(tree, env);
+            return evalMultiply(tree, env);
         } else if (!strcmp(tree->type, NOT)) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, GT)) {
@@ -56,7 +57,7 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
         } else if (!strcmp(tree->type, OR)) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, EQUALS)) {
-            return evalSimpleOp(tree, env);
+            return evalAssign(tree, env);
         } else {
             printf("Type: %s not evaluated.\n", tree->type);
         } 
@@ -69,7 +70,7 @@ Lexeme *evalFuncDef(Lexeme *t, Lexeme *env) {
     Lexeme *closure = newLexeme(CLOSURE);
     setCar(closure, env);
     setCdr(closure, t);
-    return insert(closure, getFuncDefName(t), env);
+    return insert(getFuncDefName(t), closure, env);
 }
 
 Lexeme *evalFuncCall(Lexeme *t, Lexeme *env) {
@@ -238,6 +239,96 @@ Lexeme *evalLambda(Lexeme *t, Lexeme *env) {
     setCar(closure, env);
     setCdr(closure, temp);
     return closure;
+}
+
+Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
+    Lexeme *result = newLexeme(INT);
+    if (!strcmp(t->type, NOT)) {
+    } else if (!strcmp(t->type, GT)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival > t->right->ival) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, LT)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival < t->right->ival) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, GTE)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival >= t->right->ival) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, LTE)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival <= t->right->ival) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, ISEQUAL)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival == t->right->ival) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, AND)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (isTrue(t->left->ival) && isTrue(t->right->ival)) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    } else if (!strcmp(t->type, OR)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (isTrue(t->left->ival) || isTrue(t->right->ival)) {
+                result->ival = 1;
+            } else {
+                result->ival = 0;
+            }
+        } else {
+            error("Can only compare INTs.");
+            exit(1);
+            return NULL;
+        }
+    }
 }
 
 // helpers
