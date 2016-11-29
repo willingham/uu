@@ -66,3 +66,7 @@ func test () {
 }
 test();
 ```
+
+## Grammar
+This is the grammar for the uu language.
+![alt tag](https://raw.githubusercontent.com/thwillingham/uu/main/image.png)
