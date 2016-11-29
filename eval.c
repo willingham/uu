@@ -14,6 +14,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return tree;
         } else if (!strcmp(tree->type, ARRAY)) {
             return tree;
+        } else if (!strcmp(tree->type, CLOSURE)) {
+            return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
@@ -269,7 +271,6 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
     t->left = eval(t->left, env);
     Lexeme *result = newLexeme(INT);
     if (!strcmp(t->type, NOT)) {
-        return !isTrue
     } else if (!strcmp(t->type, GT)) {
         if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
             if (t->left->ival > t->right->ival) {

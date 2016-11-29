@@ -2,31 +2,31 @@ OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o env.o eval.o
 CFLAGS=-D uuDebug
 CFLAGS=
 uu: $(OBJS)
-	gcc -Wall -g $(OBJS) -D uuDebug -o dpl
+	gcc -Wall -g $(OBJS) -D uuDebug -std=c99 -o dpl
 
 uu.o: uu.c parser.c env.c
-	gcc -Wall -g $(CFLAGS) -c uu.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c uu.c
 
 lexeme.o: lexeme.c type.c
-	gcc -Wall -g $(CFLAGS) -c lexeme.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c lexeme.c
 
 lexer.o: lexer.c lexeme.c type.c parser.c
-	gcc -Wall -g $(CFLAGS) -c lexer.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c lexer.c
 
 type.o: type.c
-	gcc -Wall -g $(CFLAGS) -c type.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c type.c
 
 parser.o: parser.c error.c
-	gcc -Wall -g $(CFLAGS) -c parser.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c parser.c
 
 error.o: error.c
-	gcc -Wall -g $(CFLAGS) -c error.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c error.c
 
 env.o: env.c lexeme.c
-	gcc -Wall -g $(CFLAGS) -c env.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c env.c
 
 eval.o: eval.c lexeme.c type.c env.c
-	gcc -Wall -g $(CFLAGS) -c eval.c
+	gcc -Wall -g $(CFLAGS) -std=c99 -c eval.c
 
 run: uu
 	./dpl sample.uu
@@ -50,7 +50,7 @@ error3:
 	cat error3.uu
 
 error3x:
-	./dplerror3.uu
+	./dpl error3.uu
 
 arrays:
 	cat arrays.uu
