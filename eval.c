@@ -3,6 +3,7 @@
 #include "lexeme.h"
 #include "type.h"
 #include "env.h"
+#include "type.h"
 
 Lexeme *eval(Lexeme *tree, Lexeme *env) {
     if (tree != NULL) {
@@ -18,10 +19,6 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalExpressionList(tree, env);
         } else if (!strcmp(tree->type, EXPR)) {
             return evalExpr(tree, env);
-        } else if (!strcmp(tree->type, PARAMLIST)) {
-            return evalParamList(tree, env);
-        } else if (!strcmp(tree->type, PRIMARY)) {
-            return evalPrimary(tree, env);
         } else if (!strcmp(tree->type, LAMBDA)) {
             return evalLambda(tree, env);
         } else if (!strcmp(tree->type, WHILE)) {
@@ -30,8 +27,6 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalIf(tree, env);
         } else if (!strcmp(tree->type, BLOCK)) {
             return evalBlock(tree, env);
-        } else if (!strcmp(tree->type, OPTPARAMLIST)) {
-            return evalOptParamList(tree, env);
         } else if (!strcmp(tree->type, OPTELSE)) {
             return evalOptElse(tree, env);
         } else if (!strcmp(tree->type, FOR)) {
@@ -62,6 +57,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, EQUALS)) {
             return evalSimpleOp(tree, env);
+        } else {
+            printf("Type: %s not evaluated.\n", tree->type);
         } 
     }
     return NULL;
@@ -186,6 +183,61 @@ Lexeme *evalWhile(Lexeme *t, Lexeme *env) {
         result = eval(cdr(t), env);
     }
     return result;
+}
+
+Lexeme *evalIf(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    if (isTrue(eval(t->left, env))) {
+           result =  eval(t->right->left, env);
+    } else {
+        result = eval(t->right->right, env);
+    }
+    return result;
+}
+
+Lexeme *evalOptElse(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    if (t == NULL) {
+        return NULL;
+    } else {
+        result = eval(t, env);
+    }
+}
+
+Lexeme *evalFor(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    while (isTrue(eval(cdr(car(t)), env))) {
+        result = eval(t->right->right, env);
+        eval(t->right->left, env);
+    }
+    return result;
+}
+
+Lexeme *evalExpressionList(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    while (t != NULL) {
+        result = eval(t->left, env);
+        t = t->right;
+    }
+    return result;
+}
+
+Lexeme *evalExpr(Lexeme *t, Lexeme *env) {
+    Lexeme *result = NULL;
+    while (t != NULL) {
+        result = eval(t->left, env);
+        t = t->right;
+    }
+    return result;
+}
+
+Lexeme *evalLambda(Lexeme *t, Lexeme *env) {
+    Lexeme *closure = newLexeme(CLOSURE);
+    Lexeme *temp = newLexeme(FUNCDEF);
+    temp->right = t;
+    setCar(closure, env);
+    setCdr(closure, temp);
+    return closure;
 }
 
 // helpers

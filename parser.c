@@ -204,7 +204,7 @@ Lexeme *primary(Parser *p) {
             match(p, CP);
             return cons(FUNCCALL, x, y);
         }
-        return cons(PRIMARY, x, y);
+        //return cons(PRIMARY, x, y);
     } else if(operatorPending(p)) {
         x = operator(p);
         y = primary(p);
