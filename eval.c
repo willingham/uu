@@ -269,6 +269,7 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
     t->left = eval(t->left, env);
     Lexeme *result = newLexeme(INT);
     if (!strcmp(t->type, NOT)) {
+        return !isTrue
     } else if (!strcmp(t->type, GT)) {
         if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
             if (t->left->ival > t->right->ival) {
