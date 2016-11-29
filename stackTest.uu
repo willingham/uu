@@ -1,0 +1,9 @@
+a = stack();
+a = push(1, a);
+println(peek(a));
+a = push("two", a);
+println(peek(a));
+a = pop(a);
+println(peek(a));
+a = push(3, a);
+println(peek(a));

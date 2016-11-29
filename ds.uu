@@ -1,0 +1,39 @@
+func cons(x, y) {
+    temp = array(2);
+    temp[0] = x;
+    temp[1] = y;
+    temp;
+}
+
+func car(x) {
+    x[0];
+}
+
+func cdr(x) {
+    x[1];
+}
+
+func stack() {
+    cons("NULL", 0);
+}
+
+func push(item, list) {
+    size = cdr(list) + 1;
+    new = cons(item, car(list));
+    cons(new, size);
+}
+
+func peek(stack) {
+    car(car(stack));
+}
+
+func pop(list) {
+    size = cdr(list) - 1;
+    if (size <= 0) {
+        "NULL";
+    } else {
+        new = cdr(car(list));
+        cons(new, size);
+    }
+}
+    

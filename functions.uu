@@ -1,0 +1,8 @@
+println("Passing a funciton to a function");
+func lamTest(lam) {
+    lam(5);
+}
+println(lamTest(lambda(x) { x + 2;}));
+
+println("Evaluating an anonymous function.");
+println(lambda(x) {x + 3;} (6));
