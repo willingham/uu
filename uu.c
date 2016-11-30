@@ -10,9 +10,11 @@
 void initEnv(Lexeme *env);
 void initStdlib(Lexeme *global);
 Lexeme *printUU(Lexeme *args);
+void printLexeme(Lexeme *x);
 Lexeme *printlnUU(Lexeme *args);
 Lexeme *arrayUU(Lexeme *args);
 Lexeme *arraySizeUU(Lexeme *args);
+
 
 int main(int argc, char **argv, char **env) {
     int pp = 0;  //pretty printer variable
@@ -77,6 +79,18 @@ Lexeme *printUU(Lexeme *args) {
             printf("%d", args->left->ival);
         } else if (!strcmp(args->left->type, STRING)) {
             printf("%s", args->left->sval);
+        } else if (!strcmp(args->left->type, ARRAY)) {
+            int i;
+            printf("[");
+            for (i = 0; i < args->left->ival; i++) {
+                if (i == (args->left->ival - 1)) {
+                    printLexeme(args->left->array[i]);
+                } else {
+                    printLexeme(args->left->array[i]);
+                    printf(",");
+                }
+            } 
+            printf("]");
         } else {
             printf("Can't print type: %s\n", args->left->type);
             exit(1);
@@ -85,6 +99,19 @@ Lexeme *printUU(Lexeme *args) {
         args = args->right;
     }
     return result;
+}
+
+void printLexeme(Lexeme *x) {
+    if (!strcmp(x->type, INT)) {
+        printf("%d", x->ival);
+    } else if (!strcmp(x->type, STRING)) {
+        printf("\"%s\"", x->sval);
+    } else if (!strcmp(x->type, NIL)) {
+        printf("nil");
+    } else {
+        printf("Can't print type: %s\n", x->type);
+        exit(1);
+    }
 }
 
 Lexeme *printlnUU(Lexeme *args) {
@@ -111,7 +138,7 @@ Lexeme *arrayUU(Lexeme *args) {
         arr->array = malloc(args->left->ival * sizeof(Lexeme *));
         arr->ival = args->left->ival;
         for (int i = 0; i < args->left->ival; i++) {
-            arr->array[i] = newLexeme(BAD);
+            arr->array[i] = newLexeme(NIL);
         }
         return arr;
     }

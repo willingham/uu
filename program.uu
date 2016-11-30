@@ -1,0 +1,12 @@
+func setupInput() {
+    arr = array(5);
+    arr[1] = 2;
+    arr[2] = 4;
+    arr[3] = "+";
+    arr[4] = "3";
+    arr[5] = "*";
+    print(arr);
+    arr;
+}
+
+setupInput();

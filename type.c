@@ -35,6 +35,7 @@ char *ELSE = "ELSE";
 char *OPTELSE = "OPTELSE";
 
 char *BAD = "BAD";
+char *NIL = "NIL";
 
 char *STRING = "STRING";
 char *INT = "INT";

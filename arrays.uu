@@ -3,4 +3,6 @@ a[0] = "hello";
 a[1] = ", ";
 a[2] = "world";
 println("Size: ", arraySize(a));
+print(a);
+println("");
 println(a[0], a[1], a[2]);

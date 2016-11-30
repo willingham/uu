@@ -36,6 +36,7 @@ extern char *OPTELSE;
 extern char *ELSE;
 
 extern char *BAD;
+extern char *NIL;
 
 extern char *STRING;
 extern char *INT;
