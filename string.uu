@@ -1,0 +1,8 @@
+func str(x) {
+    if (x == "asdf") {
+        println("x is asdf");
+    } 
+    println(x == "asdf");
+}
+x = "asdf";
+str(x);

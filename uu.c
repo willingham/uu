@@ -12,6 +12,7 @@ void initStdlib(Lexeme *global);
 Lexeme *printUU(Lexeme *args);
 Lexeme *printlnUU(Lexeme *args);
 Lexeme *arrayUU(Lexeme *args);
+Lexeme *arraySizeUU(Lexeme *args);
 
 int main(int argc, char **argv, char **env) {
     int pp = 0;  //pretty printer variable
@@ -55,6 +56,12 @@ void initEnv(Lexeme *env) {
     var->sval = "array";
     val = newLexeme(BUILTIN);
     val->fp = arrayUU;
+    insert(var, val, env);
+    
+    var = newLexeme(ID);
+    var->sval = "arraySize";
+    val = newLexeme(BUILTIN);
+    val->fp = arraySizeUU;
     insert(var, val, env);
 }
 
@@ -102,6 +109,7 @@ Lexeme *arrayUU(Lexeme *args) {
     } else {
         Lexeme *arr = newLexeme(ARRAY);
         arr->array = malloc(args->left->ival * sizeof(Lexeme *));
+        arr->ival = args->left->ival;
         for (int i = 0; i < args->left->ival; i++) {
             arr->array[i] = newLexeme(BAD);
         }
@@ -109,3 +117,19 @@ Lexeme *arrayUU(Lexeme *args) {
     }
 }
 
+Lexeme *arraySizeUU(Lexeme *args) {
+    if (args == NULL) {
+        error("Not enough arguments for arraySize\n");
+        exit(1);
+    } else if (args->right != NULL) {
+        error("Too many arguments for arraySize\n");
+        exit(1);
+    } else if (strcmp(args->left->type, ARRAY)) {
+        error("Argument to arraySize must be an array\n");
+        exit(1);
+    } else {
+        Lexeme *temp = newLexeme(INT);
+        temp->ival = args->left->ival;  
+        return temp;
+    }
+}
