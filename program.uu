@@ -1,12 +1,32 @@
-func setupInput() {
-    arr = array(5);
-    arr[1] = 2;
-    arr[2] = 4;
-    arr[3] = "+";
-    arr[4] = "3";
-    arr[5] = "*";
+func setupInput(x) {
+    arr = array(x);
+    arr[0] = 2;
+    arr[1] = 4;
+    arr[2] = "+";
+    arr[3] = "3";
+    arr[4] = "*";
     print(arr);
+    println("");
     arr;
 }
 
-setupInput();
+size = 5;
+input = setupInput(size);
+stk = stack();
+for (i = 1; i < size; i = i + 1) {
+    x = peek(stk);
+    if (x == "*") {
+        pop(x);
+        b = pop(x);
+        a = pop(x);
+        push(a * b);
+        println("mul: ", a * b);
+    } else if (x == "/") {
+        pop(x);
+        b = pop(x);
+        a = pop(x);
+        push(a / b);
+        println("div: ", a / b);
+    }
+}
+
