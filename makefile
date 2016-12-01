@@ -1,6 +1,5 @@
 OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o env.o eval.o
 CFLAGS=-D uuDebug
-CFLAGS=
 uu: $(OBJS)
 	gcc -Wall -g $(OBJS) -D uuDebug -std=c99 -o dpl
 

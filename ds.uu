@@ -23,17 +23,24 @@ func push(item, list) {
     cons(new, size);
 }
 
-func peek(stack) {
-    car(car(stack));
+func peek(stk) {
+    if (stackSize(stk) == 0) {
+        nil;
+    } else {
+        car(car(stk));
+    }
 }
 
 func pop(list) {
     size = cdr(list) - 1;
     if (size <= 0) {
-        "NULL";
+        nil;
     } else {
         new = cdr(car(list));
         cons(new, size);
     }
 }
     
+func stackSize(stk) {
+    stk[1];
+}

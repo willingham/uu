@@ -16,6 +16,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return tree;
         } else if (!strcmp(tree->type, CLOSURE)) {
             return tree;
+        } else if (!strcmp(tree->type, NIL)) {
+            return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
@@ -328,6 +330,14 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             }
         } else if ((!strcmp(t->left->type, STRING) || !strcmp(t->left->type, ID)) && (!strcmp(t->right->type, STRING) || !strcmp(t->left->type, ID))) {
             result->ival = !strcmp(t->left->sval, t->right->sval);
+        } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, STRING)) {
+            result->ival = 0;
+        } else if (!strcmp(t->left->type, STRING) && !strcmp(t->right->type, NIL)) {
+            result->ival = 0;
+        } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, INT)) {
+            result->ival = 0;
+        } else if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, NIL)) {
+            result->ival = 0;
         } else {
             printf("l->%s, r->%s\n", t->left->type, t->right->type);
             error("Invalid comparison.");

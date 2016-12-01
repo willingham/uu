@@ -72,7 +72,7 @@ int idListPending(Parser *p) {
 
 int primaryPending(Parser *p) {
     return literalPending(p) || check(p, OP) || \
-           lambdaPending(p) || check(p, ID) || operatorPending(p);
+           lambdaPending(p) || check(p, ID) || check(p, NIL) || operatorPending(p);
 }
 
 int operatorPending(Parser *p) {
@@ -199,6 +199,8 @@ Lexeme *primary(Parser *p) {
             return cons(FUNCCALL, x, y);
         }
         return x;
+    } else if (check(p, NIL)) {
+        return match(p, NIL);
     } else if(check(p, ID)) {
         x = match(p, ID);
         if(check(p, OSB)) {

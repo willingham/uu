@@ -7,7 +7,7 @@ if exists("b:current_syntax")
     finish
 endif
 
-syn keyword basicLanguageKeywords func if else while for
+syn keyword basicLanguageKeywords func if else while for nil
 syn keyword builtins print println array
 syn keyword stdlib stack push pop peek cons car cdr
 syn match uuComment "//.*$"
