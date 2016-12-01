@@ -6,12 +6,16 @@ func setupInput(x) {
     arr[2] = "/";
     arr[3] = 3;
     arr[4] = "*";
+    arr[5] = 2;
+    arr[6] = "+";
+    arr[7] = 2;
+    arr[8] = "^";
     print(arr);
     println("");
     arr;
 }
 
-size = 5;
+size = 9;
 input = setupInput(size);
 stk = stack();
 for (i = 0; i < size; i = i + 1) {
