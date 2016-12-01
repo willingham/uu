@@ -19,6 +19,8 @@ Lexeme *lex(Parser *p) {
             return newLexeme(DIVIDE);
         case '*':
             return newLexeme(MULTIPLY);
+        case '^':
+            return newLexeme(EXPONENT);
         case '!':
             return newLexeme(NOT);
         case '>':

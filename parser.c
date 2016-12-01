@@ -76,7 +76,7 @@ int primaryPending(Parser *p) {
 }
 
 int operatorPending(Parser *p) {
-    return check(p, MINUS) || check(p, PLUS) || check(p, DIVIDE) || check(p, MULTIPLY) || \
+    return check(p, MINUS) || check(p, PLUS) || check(p, DIVIDE) || check(p, MULTIPLY) || check(p, EXPONENT) || \
            check(p, NOT) || check(p, GT) || check(p, LT) || check(p, GTE) || check(p, LTE) || \
            check(p, ISEQUAL) || check(p, AND) || check(p, OR) || check(p, EQUALS);
 }
@@ -235,6 +235,8 @@ Lexeme *operator(Parser *p) {
         return match(p, DIVIDE);
     } else if (check(p, MULTIPLY)) {
         return match(p, MULTIPLY);
+    } else if (check(p, EXPONENT)) {
+        return match(p, EXPONENT);
     } else if (check(p, NOT)) {
         return match(p, NOT);
     } else if (check(p, GT)) {

@@ -44,6 +44,7 @@ char *MINUS = "MINUS";
 char *PLUS = "PLUS";
 char *DIVIDE = "DIVIDE";
 char *MULTIPLY = "MULTIPLY";
+char *EXPONENT = "EXPONENT";
 char *NOT = "NOT";
 char *GT = "GT";
 char *LT = "LT";

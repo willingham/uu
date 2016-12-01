@@ -45,6 +45,7 @@ extern char *MINUS;
 extern char *PLUS;
 extern char *DIVIDE;
 extern char *MULTIPLY;
+extern char *EXPONENT;
 extern char *NOT;
 extern char *GT;
 extern char *LT;

@@ -48,6 +48,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalDivide(tree, env);
         } else if (!strcmp(tree->type, MULTIPLY)) {
             return evalMultiply(tree, env);
+        } else if (!strcmp(tree->type, EXPONENT)) {
+            return evalExponent(tree, env);
         } else if (!strcmp(tree->type, NOT)) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, GT)) {
@@ -178,6 +180,25 @@ Lexeme *evalMultiply(Lexeme *t, Lexeme *env) {
     if (left->type == INT && right->type == INT) {
         Lexeme *new = newLexeme(INT);
 		new->ival = left->ival * right->ival;
+		return new;
+    } else {
+        error("Can only multiply ints.");
+        exit(1);
+        return NULL;
+    } 
+}
+
+Lexeme *evalExponent(Lexeme *t, Lexeme *env) {
+	//eval the left and the right hand sides
+    Lexeme *left = eval(car(t),env);
+    Lexeme *right = eval(cdr(t),env);
+    if (left->type == INT && right->type == INT) {
+        Lexeme *new = newLexeme(INT);
+        int i, result = 1;
+        for (i=0; i < right->ival; i++) {
+            result *= left->ival;
+        }
+		new->ival = result;
 		return new;
     } else {
         error("Can only multiply ints.");
@@ -368,6 +389,8 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
         return evalDivide(t, env);
     } else if (!strcmp(t->type, MULTIPLY)) {
         return evalMultiply(t, env);
+    } else if (!strcmp(t->type, EXPONENT)) {
+        return evalExponent(t, env);
     } else {
         return NULL;
     }
