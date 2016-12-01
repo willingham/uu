@@ -3,8 +3,8 @@ func setupInput(x) {
     arr = array(x);
     arr[0] = 2;
     arr[1] = 4;
-    arr[2] = "+";
-    arr[3] = "3";
+    arr[2] = "/";
+    arr[3] = 3;
     arr[4] = "*";
     print(arr);
     println("");
@@ -14,21 +14,36 @@ func setupInput(x) {
 size = 5;
 input = setupInput(size);
 stk = stack();
-for (i = 1; i < size; i = i + 1) {
-    println("i: ", i);
-    x = peek(stk);
+for (i = 0; i < size; i = i + 1) {
+    x = input[i];
     if (x == "*") {
-        pop(x);
-        b = pop(x);
-        a = pop(x);
-        push(a * b);
-        println("mul: ", a * b);
+        b = peek(stk);
+        stk = pop(stk);
+        a = peek(stk);
+        stk = pop(stk);
+        stk = push(b * a, stk);
     } else if (x == "/") {
-        pop(x);
-        b = pop(x);
-        a = pop(x);
-        push(a / b);
-        println("div: ", a / b);
+        b = peek(stk);
+        stk = pop(stk);
+        a = peek(stk);
+        stk = pop(stk);
+        stk = push(b / a, stk);
+    } else if (x == "+") {
+        b = peek(stk);
+        stk = pop(stk);
+        a = peek(stk);
+        stk = pop(stk);
+        stk = push(b + a, stk);
+    } else if (x == "-") {
+        b = peek(stk);
+        stk = pop(stk);
+        a = peek(stk);
+        stk = pop(stk);
+        stk = push(b - a, stk);
+    } else {
+        stk = push(x, stk);
     }
+        
 }
+println("result: ", peek(stk));
 

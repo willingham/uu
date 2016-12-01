@@ -14,12 +14,12 @@ func cdr(x) {
 }
 
 func stack() {
-    cons("NULL", 0);
+    cons(nil, 0);
 }
 
-func push(item, list) {
-    size = cdr(list) + 1;
-    new = cons(item, car(list));
+func push(item, stk) {
+    size = cdr(stk) + 1;
+    new = cons(item, car(stk));
     cons(new, size);
 }
 
@@ -34,13 +34,13 @@ func peek(stk) {
 func pop(list) {
     size = cdr(list) - 1;
     if (size <= 0) {
-        nil;
+        new = nil;
     } else {
         new = cdr(car(list));
-        cons(new, size);
     }
+    cons(new, size);
 }
     
 func stackSize(stk) {
-    stk[1];
+    cdr(stk);
 }

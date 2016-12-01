@@ -338,6 +338,10 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             result->ival = 0;
         } else if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, NIL)) {
             result->ival = 0;
+        } else if (!strcmp(t->left->type, STRING) && !strcmp(t->right->type, INT)) {
+            result->ival = 0;
+        } else if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, STRING)) {
+            result->ival = 0;
         } else {
             printf("l->%s, r->%s\n", t->left->type, t->right->type);
             error("Invalid comparison.");
