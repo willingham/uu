@@ -1,3 +1,4 @@
+// setup input array
 func setupInput(x) {
     arr = array(x);
     arr[0] = 2;

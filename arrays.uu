@@ -1,3 +1,4 @@
+// create array
 a = array(3);
 a[0] = "hello";
 a[1] = ", ";

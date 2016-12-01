@@ -161,9 +161,14 @@ int isWhiteSpace(int cur) {
 
 int getChar(Parser *p) {
     int cur = fgetc(p->fIn);
-    if (cur == '!') {
-        while (!isNewLine(cur) && !feof(p->fIn)) {
-            cur = fgetc(p->fIn);
+    if (cur == '/') {
+        int curr = fgetc(p->fIn);
+        if (curr == '/') {
+            while (!isNewLine(cur) && !feof(p->fIn)) {
+                cur = fgetc(p->fIn);
+            }
+        } else {
+            ungetc(curr, p->fIn);
         }
     }
     return cur;
