@@ -507,6 +507,8 @@ void prettyPrinter(Lexeme *l, char *s) {
             printf(" / ");
         } else if (!strcmp(l->type, MULTIPLY)) {
             printf(" * ");
+        } else if (!strcmp(l->type, EXPONENT)) {
+            printf(" ^ ");
         } else if (!strcmp(l->type, NOT)) {
             printf(" ! ");
         } else if (!strcmp(l->type, GT)) {

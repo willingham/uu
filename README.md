@@ -20,6 +20,14 @@ The double u programming language.
   make
   dpl <your input file>
   ```
+## Debugging
+  If you run into errors, and beleive it is related to the syntax, you can compile uu in debug mode.
+  ```sh
+  make clean
+  make CFLAGS="-D uuDebug"
+  ```
+  When you run uu programs after uu has been compiled in debug mode, the parser will print out each time it checks for an item.
+
 ## Vim Syntax File
 The uu.vim file will enable syntax highlighting for the uu language if you install it on your system.
 ```vim

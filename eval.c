@@ -236,8 +236,6 @@ Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
         temp->left = value->left;
         temp->right = value->right;
         temp->array = value->array;
-    } else if (!strcmp(t->left->type, DOT)) {
-        Lexeme *x = eval(t->left->left, env);
     } else {
         insert(car(t), value, env);
     }

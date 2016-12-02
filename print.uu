@@ -1,1 +1,15 @@
-print("hello, world\n", "asdf");
+print("Hello", ", ", "W", 0, "rld"); println("");
+println("Hello", ", ", "W", 0, "rld");
+a = array(3);
+a[0] = "Hello";
+a[1] = ", ";
+a[2] = "World";
+println(a);
+println(a[0], a[1], a[2]);
+
+func two() {
+    t = 2;
+}
+
+println(two);
+

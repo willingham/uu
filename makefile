@@ -1,6 +1,7 @@
 OBJS=uu.o lexeme.o lexer.o type.o parser.o error.o env.o eval.o
 CFLAGS=-D uuDebug
 CFLAGS=
+export CFLAGS
 uu: $(OBJS)
 	gcc -Wall -g $(OBJS) -D uuDebug -std=c99 -o dpl
 
@@ -94,29 +95,101 @@ problem:
 problemx:
 	./dpl problem.uu
 demo: uu
+	@echo ""
+	@echo "##################################"
+	@echo "######## error1"
+	@echo "##################################"
+	@echo ""
 	-make error1
 	-make error1x
+	@echo ""
+	@echo "##################################"
+	@echo "######## error2"
+	@echo "##################################"
+	@echo ""
 	-make error2
 	-make error2x
+	@echo ""
+	@echo "##################################"
+	@echo "######## error3"
+	@echo "##################################"
+	@echo ""
 	-make error3
 	-make error3x
+	@echo ""
+	@echo "##################################"
+	@echo "######## arrays"
+	@echo "##################################"
+	@echo ""
 	-make arrays
 	-make arraysx
+	@echo ""
+	@echo "##################################"
+	@echo "######## conditionals"
+	@echo "##################################"
+	@echo ""
 	-make conditionals
 	-make conditionalsx
+	@echo ""
+	@echo "##################################"
+	@echo "######## recursion"
+	@echo "##################################"
+	@echo ""
 	-make recursion
 	-make recursionx
+	@echo ""
+	@echo "##################################"
+	@echo "######## iteration"
+	@echo "##################################"
+	@echo ""
 	-make iteration
 	-make iterationx
+	@echo ""
+	@echo "##################################"
+	@echo "######## functions"
+	@echo "##################################"
+	@echo ""
 	-make functions
 	-make functionsx
+	@echo ""
+	@echo "##################################"
+	@echo "######## dictionary"
+	@echo "##################################"
+	@echo ""
 	-make dictionary
 	-make dictionaryx
 	echo ******DEMO STUFF******
+	@echo ""
+	@echo "##################################"
+	@echo "######## cons, car, cdr"
+	@echo "##################################"
+	@echo ""
 	cat consTest.uu
 	./dpl consTest.uu
+	@echo ""
+	@echo "##################################"
+	@echo "######## stack"
+	@echo "##################################"
+	@echo ""
 	cat stackTest.uu
 	./dpl stackTest.uu
+	@echo ""
+	@echo "##################################"
+	@echo "######## print"
+	@echo "##################################"
+	@echo ""
 	cat print.uu
 	./dpl print.uu
+	@echo ""
+	@echo "##################################"
+	@echo "######## stdlib: ds"
+	@echo "##################################"
+	@echo ""
+	cat ds.uu
+	@echo ""
+	@echo "##################################"
+	@echo "######## stdlib: math"
+	@echo "##################################"
+	@echo ""
+	cat math.uu
 

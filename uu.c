@@ -94,6 +94,8 @@ Lexeme *printUU(Lexeme *args) {
                 }
             } 
             printf("]");
+        } else if (!strcmp(args->left->type, CLOSURE)) {
+            pretty(args->left->right);
         } else {
             printf("Can't print type: %s\n", args->left->type);
             exit(1);
