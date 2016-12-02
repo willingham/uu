@@ -85,7 +85,6 @@ func test () {
         print("wer");
     } else if (wer == 2) {
         print("wer");
-        a[2];
     }
     while(wer == 1) {
         wer = wer + 1;
