@@ -1,7 +1,14 @@
-func iterate() {
-    for(i = 1; i < 6; i = i + 1) {
+func iterate(x) {
+    for(i = 0; i < x; i = i + 1) {
         print("i is ");
         println(i);
     }
+
+    i = 0;
+    while (i < x) {
+        print("i is ");
+        println(i);
+        i = i + 1;
+    }
 }
-iterate();
+iterate(5);
