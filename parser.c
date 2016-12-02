@@ -78,7 +78,7 @@ int primaryPending(Parser *p) {
 int operatorPending(Parser *p) {
     return check(p, MINUS) || check(p, PLUS) || check(p, DIVIDE) || check(p, MULTIPLY) || check(p, EXPONENT) || \
            check(p, NOT) || check(p, GT) || check(p, LT) || check(p, GTE) || check(p, LTE) || \
-           check(p, ISEQUAL) || check(p, AND) || check(p, OR) || check(p, EQUALS);
+           check(p, ISEQUAL) || check(p, NE) || check(p, AND) || check(p, OR) || check(p, EQUALS) || check(p, DOT);
 }
 
 int literalPending(Parser *p) {
@@ -239,6 +239,8 @@ Lexeme *operator(Parser *p) {
         return match(p, EXPONENT);
     } else if (check(p, NOT)) {
         return match(p, NOT);
+    } else if (check(p, NE)) {
+        return match(p, NE);
     } else if (check(p, GT)) {
         return match(p, GT);
     } else if (check(p, LT)) {
@@ -255,6 +257,8 @@ Lexeme *operator(Parser *p) {
         return match(p, OR);
     } else if (check(p, EQUALS)) {
         return match(p, EQUALS);
+    } else if (check(p, DOT)) {
+        return match(p, DOT);
     } else {
         error("Operator not found.");
         exit(1);

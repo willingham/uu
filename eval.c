@@ -52,6 +52,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return evalExponent(tree, env);
         } else if (!strcmp(tree->type, NOT)) {
             return evalSimpleOp(tree, env);
+        } else if (!strcmp(tree->type, NE)) {
+            return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, GT)) {
             return evalSimpleOp(tree, env);
         } else if (!strcmp(tree->type, LT)) {
@@ -294,6 +296,36 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
     t->left = eval(t->left, env);
     Lexeme *result = newLexeme(INT);
     if (!strcmp(t->type, NOT)) {
+    } else if (!strcmp(t->type, NE)) {
+        if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
+            if (t->left->ival == t->right->ival) {
+                result->ival = 0;
+            } else {
+                result->ival = 1;
+            }
+        } else if ((!strcmp(t->left->type, STRING) || !strcmp(t->left->type, ID)) && (!strcmp(t->right->type, STRING) || !strcmp(t->left->type, ID))) {
+            result->ival = !strcmp(t->left->sval, t->right->sval);
+        } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, STRING)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, STRING) && !strcmp(t->right->type, NIL)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, INT)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, NIL)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, STRING) && !strcmp(t->right->type, INT)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, STRING)) {
+            result->ival = 1;
+        } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, NIL)) {
+            result->ival = 0;
+        } else {
+            printf("l->%s, r->%s\n", t->left->type, t->right->type);
+            error("Invalid comparison.");
+            exit(1);
+            return NULL;
+        }
+        
     } else if (!strcmp(t->type, GT)) {
         if (!strcmp(t->left->type, INT) && !strcmp(t->right->type, INT)) {
             if (t->left->ival > t->right->ival) {

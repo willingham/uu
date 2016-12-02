@@ -41,12 +41,14 @@ extern char *NIL;
 extern char *STRING;
 extern char *INT;
 
+extern char *DOT;
 extern char *MINUS;
 extern char *PLUS;
 extern char *DIVIDE;
 extern char *MULTIPLY;
 extern char *EXPONENT;
 extern char *NOT;
+extern char *NE;
 extern char *GT;
 extern char *LT;
 extern char *GTE;

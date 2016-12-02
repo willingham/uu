@@ -40,12 +40,14 @@ char *NIL = "NIL";
 char *STRING = "STRING";
 char *INT = "INT";
 
+char *DOT = "DOT";
 char *MINUS = "MINUS";
 char *PLUS = "PLUS";
 char *DIVIDE = "DIVIDE";
 char *MULTIPLY = "MULTIPLY";
 char *EXPONENT = "EXPONENT";
 char *NOT = "NOT";
+char *NE = "NE";
 char *GT = "GT";
 char *LT = "LT";
 char *GTE = "GTE";

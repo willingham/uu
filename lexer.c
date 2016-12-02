@@ -11,6 +11,8 @@ Lexeme *lex(Parser *p) {
 
     switch(ch) {
         // single character tokens
+        case '.':
+            return newLexeme(DOT);
         case '-':
             return newLexeme(MINUS);
         case '+':
@@ -22,8 +24,18 @@ Lexeme *lex(Parser *p) {
         case '^':
             return newLexeme(EXPONENT);
         case '!':
+            ch = getChar(p);
+            if (ch == '=') {
+                return newLexeme(NE);
+            }
+            ungetc(ch, p->fIn);
             return newLexeme(NOT);
         case '>':
+            ch = getChar(p);
+            if (ch == '=') {
+                return newLexeme(GTE);
+            }
+            ungetc(ch, p->fIn);
             return newLexeme(GT);
         case '<':
             ch = getChar(p);
