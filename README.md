@@ -101,8 +101,6 @@ This is the structure in which programs are parsed and then evaluated.
 ![alt tag](https://github.com/thwillingham/uu/blob/master/parseTree.png)
 
 ## Grammar
-This is the grammar for the uu language.
-![alt tag](https://github.com/thwillingham/uu/blob/master/grammar.png)
 
 ```
 // Grammar for the double u programming language
