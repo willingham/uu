@@ -11,6 +11,14 @@ func car(x) {
     x[0];
 }
 
+func setCar(x, n) {
+    x[0] = n;
+}
+
+func setCdr(x, n) {
+    x[1] = n;
+}
+
 func cdr(x) {
     x[1];
 }
@@ -65,19 +73,7 @@ func getWeight(n) {
 }
 
 func setWeight(n, w) {
-    cons(
-        cons(
-            cons(
-                w,
-                cdr(car(car(n)))
-                ),
-            cons(
-                car(cdr(car(n))),
-                cdr(cdr(car(n)))
-                )
-            ),
-        cdr(n)    
-        );
+    setCar(car(car(n)), w);
 }
 
 func getParent(n) {
@@ -85,19 +81,7 @@ func getParent(n) {
 }
 
 func setParent(n, p) {
-    cons(
-        cons(
-            cons(
-                car(car(car(n))),
-                p
-                ),
-            cons(
-                car(cdr(car(n))),
-                cdr(cdr(car(n)))
-                )
-            ),
-        cdr(n)    
-        );
+    setCdr(car(car(n)), p);
 }
 
 func getLeft(n) {
@@ -105,19 +89,7 @@ func getLeft(n) {
 }
 
 func setLeft(n, l) {
-    cons(
-        cons(
-            cons(
-                car(car(car(n))),
-                cdr(car(car(n)))
-                ),
-            cons(
-                l,
-                cdr(cdr(car(n)))
-                )
-            ),
-        cdr(n)    
-        );
+    setCar(cdr(car(n)), l);
 }
 
 func getRight(n) {
@@ -125,19 +97,7 @@ func getRight(n) {
 }
 
 func setRight(n, r) {
-    cons(
-        cons(
-            cons(
-                car(car(car(n))),
-                cdr(car(car(n)))
-                ),
-            cons(
-                car(cdr(car(n))),
-                r
-                )
-            ),
-        cdr(n)    
-        );
+    setCdr(cdr(car(n)), r);
 }
 
 func getGrand(n) {
@@ -150,18 +110,6 @@ func getValue(n) {
 }
 
 func setValue(n, v) {
-    cons(
-    cons(
-        cons(
-            car(car(car(n))),
-            cdr(car(car(n)))
-            ),
-        cons(
-            car(cdr(car(n))),
-            cdr(cdr(car(n)))
-            )
-        ),
-        v
-        );
+    setCdr(n, v);
 }
 
