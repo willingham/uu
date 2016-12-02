@@ -2,7 +2,7 @@
 The double u programming language.
 
 ## Features
-  - Inline comments are possible with a '!'.
+  - Inline comments are possible with a '//'.
   - Run 'dpl -pp' to see the pretty printer.
     This will print out the parse tree without evaluating anything.  The pretty printer is a fixed-point combinator for all valid uu syntax.
   - Lambdas can be passed as variables in between functions.
