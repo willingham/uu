@@ -1,1 +1,15 @@
-println(2 ^ 3);
+func max(x, y) {
+    if (x > y) {
+        x;
+    } else {
+        y;
+    }
+}
+
+func min(x, y) {
+    if (x < y) {
+        x;
+    } else {
+        y;
+    }
+}

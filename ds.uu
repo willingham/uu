@@ -69,7 +69,11 @@ func node() {
 }
 
 func getWeight(n) {
-    car(car(car(n)));
+    if (n == null) {
+        0;
+    } else {
+        car(car(car(n)));
+    }
 }
 
 func setWeight(n, w) {

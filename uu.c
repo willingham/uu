@@ -70,6 +70,9 @@ void initEnv(Lexeme *env) {
 void initStdlib(Lexeme *global) {
     Lexeme *parseTree = parse(fopen("ds.uu", "r"));
     eval(parseTree, global);
+
+    parseTree = parse(fopen("math.uu", "r"));
+    eval(parseTree, global);
 }
 
 Lexeme *printUU(Lexeme *args) {

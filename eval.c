@@ -330,6 +330,10 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             result->ival = 1;
         } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, NIL)) {
             result->ival = 0;
+        } else if (!strcmp(t->left->type, NIL) && strcmp(t->right->type, NIL)) {
+            result->ival = 1;
+        } else if (strcmp(t->left->type, NIL) && !strcmp(t->right->type, NIL)) {
+            result->ival = 1;
         } else {
             printf("l->%s, r->%s\n", t->left->type, t->right->type);
             error("Invalid comparison.");
@@ -346,6 +350,7 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             }
         } else {
             error("Can only compare INTs.");
+            printf("Types: %s %s\n", t->left->type, t->right->type);
             exit(1);
             return NULL;
         }
@@ -358,6 +363,7 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             }
         } else {
             error("Can only compare INTs.");
+            printf("Types: %s %s\n", t->left->type, t->right->type);
             exit(1);
             return NULL;
         }
@@ -370,6 +376,7 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             }
         } else {
             error("Can only compare INTs.");
+            printf("Types: %s %s\n", t->left->type, t->right->type);
             exit(1);
             return NULL;
         }
@@ -382,6 +389,7 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             }
         } else {
             error("Can only compare INTs.");
+            printf("Types: %s %s\n", t->left->type, t->right->type);
             exit(1);
             return NULL;
         }
@@ -408,9 +416,13 @@ Lexeme *evalSimpleOp(Lexeme *t, Lexeme *env) {
             result->ival = 0;
         } else if (!strcmp(t->left->type, NIL) && !strcmp(t->right->type, NIL)) {
             result->ival = 1;
+        } else if (!strcmp(t->left->type, NIL) && strcmp(t->right->type, NIL)) {
+            result->ival = 0;
+        } else if (strcmp(t->left->type, NIL) && !strcmp(t->right->type, NIL)) {
+            result->ival = 0;
         } else {
             printf("l->%s, r->%s\n", t->left->type, t->right->type);
-            error("Invalid comparison.");
+            printf("Invalid comparison.");
             exit(1);
             return NULL;
         }
