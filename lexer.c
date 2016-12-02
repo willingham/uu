@@ -136,6 +136,8 @@ Lexeme *lexID(Parser *p, int i) {
         l->type = ELSE;
     } else if (!strcmp(s, "nil")) {
         l->type = NIL;
+    } else if (!strcmp(s, "break")) {
+        l->type = BREAK;
     } else {
         l->sval = malloc(strlen(s) + 1);
         strcpy(l->sval, s);

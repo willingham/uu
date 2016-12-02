@@ -34,6 +34,7 @@ extern char *FOR;
 extern char *IF;
 extern char *OPTELSE;
 extern char *ELSE;
+extern char *BREAK;
 
 extern char *BAD;
 extern char *NIL;

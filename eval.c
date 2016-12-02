@@ -18,6 +18,8 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return tree;
         } else if (!strcmp(tree->type, NIL)) {
             return tree;
+        } else if (!strcmp(tree->type, BREAK)) {
+            return tree;
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
@@ -113,6 +115,9 @@ Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
     Lexeme *result;
     while (t != NULL) {
         result = eval(car(t), env);
+        if (!strcmp(result->type, BLOCK)) {
+            return result;
+        }
         t = cdr(t);
     }
     return result;
@@ -230,6 +235,9 @@ Lexeme *evalWhile(Lexeme *t, Lexeme *env) {
     Lexeme *result = NULL;
     while (isTrue(eval(car(t), env))) {
         result = eval(cdr(t), env);
+        if (!strcmp(result->type, BREAK)) {
+            return newLexeme(NIL);
+        }
     }
     return result;
 }
@@ -263,9 +271,12 @@ Lexeme *evalFor(Lexeme *t, Lexeme *env) {
 }
 
 Lexeme *evalExpressionList(Lexeme *t, Lexeme *env) {
-    Lexeme *result = NULL;
+    Lexeme *result = newLexeme(NIL);
     while (t != NULL) {
         result = eval(t->left, env);
+        if (result != NULL && !strcmp(result->type, BREAK)) {
+            return result;
+        }
         t = t->right;
     }
     return result;

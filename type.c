@@ -33,6 +33,7 @@ char *FOR = "FOR";
 char *IF = "IF";
 char *ELSE = "ELSE";
 char *OPTELSE = "OPTELSE";
+char *BREAK = "BREAK";
 
 char *BAD = "BAD";
 char *NIL = "NIL";
