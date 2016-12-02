@@ -23,7 +23,7 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
         } else if (!strcmp(tree->type, DOT)) {
             return evalDot(tree, env);
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
-            if (!strcmp(t->sval, this)) {
+            if (!strcmp(tree->sval, "this")) {
                 return env;
             }
             return lookupEnv(tree, env);

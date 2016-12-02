@@ -43,6 +43,8 @@ extern char *STRING;
 extern char *INT;
 
 extern char *DOT;
+extern char *THIS;
+
 extern char *MINUS;
 extern char *PLUS;
 extern char *DIVIDE;

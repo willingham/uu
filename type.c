@@ -42,6 +42,8 @@ char *STRING = "STRING";
 char *INT = "INT";
 
 char *DOT = "DOT";
+char *THIS = "THIS";
+
 char *MINUS = "MINUS";
 char *PLUS = "PLUS";
 char *DIVIDE = "DIVIDE";
