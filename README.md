@@ -44,23 +44,28 @@ make functionsx
 
 ## Standard Library
 These functions are ready for use in any uu program.
+
   - cons(a, b)
   - car(a)
   - setCar(a)
   - cdr(a)
   - setCdr(a)
 
+Stacks
   - stack()
   - push(item, stack)
   - pop(stack)
   - peek(stack)
 
+Printing
   - print(items, to, print)
   - println(items, to, print)
 
+Math
   - min(a, b)
   - max(a, b)
 
+Trees
   - node()
   - getParent(n)
   - setParent(n)
