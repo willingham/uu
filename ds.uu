@@ -65,7 +65,8 @@ func node() {
             cons(nil, nil), 
             cons(nil, nil)
             ), 
-        nil);
+        cons(nil, nil)
+        );
 }
 
 func getWeight(n) {
@@ -110,10 +111,17 @@ func getGrand(n) {
 }
 
 func getValue(n) {
-    cdr(n);
+    cdr(cdr(n));
 }
 
 func setValue(n, v) {
-    setCdr(n, v);
+    setCdr(cdr(n), v);
 }
 
+func getKey(n) {
+    car(cdr(n));
+}
+
+func setKey(n) {
+    setCar(cdr(n));
+}

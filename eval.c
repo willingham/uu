@@ -115,7 +115,7 @@ Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
     Lexeme *result;
     while (t != NULL) {
         result = eval(car(t), env);
-        if (!strcmp(result->type, BLOCK)) {
+        if (result != NULL && !strcmp(result->type, BREAK)) {
             return result;
         }
         t = cdr(t);
@@ -458,6 +458,7 @@ Lexeme *evalArrayAccess(Lexeme *t, Lexeme *env) {
     Lexeme *temp = lookupEnv(t->left, env);
     if (strcmp(temp->type, ARRAY)) {
         error("Invalid array.\n");
+        printf("Type: %s\n", temp->type);
         exit(1);
     } 
     Lexeme *index = eval(t->right, env);
