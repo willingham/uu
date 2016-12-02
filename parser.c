@@ -72,13 +72,13 @@ int idListPending(Parser *p) {
 
 int primaryPending(Parser *p) {
     return literalPending(p) || check(p, OP) || check(p, BREAK) || \
-           lambdaPending(p) || check(p, ID) || check(p, NIL) || operatorPending(p);
+           lambdaPending(p) || variablePending(p) || check(p, NIL) || operatorPending(p);
 }
 
 int operatorPending(Parser *p) {
     return check(p, MINUS) || check(p, PLUS) || check(p, DIVIDE) || check(p, MULTIPLY) || check(p, EXPONENT) || \
            check(p, NOT) || check(p, GT) || check(p, LT) || check(p, GTE) || check(p, LTE) || \
-           check(p, ISEQUAL) || check(p, NE) || check(p, AND) || check(p, OR) || check(p, EQUALS) || check(p, DOT);
+           check(p, ISEQUAL) || check(p, NE) || check(p, AND) || check(p, OR) || check(p, EQUALS);
 }
 
 int literalPending(Parser *p) {
@@ -115,6 +115,10 @@ int iffPending(Parser *p) {
 
 int optElsePending(Parser *p) {
     return check(p, ELSE) || 1; // ?? Do I need this?
+}
+
+int variablePending(Parser *p) {
+    return check(p, ID);
 }
 
 
@@ -215,6 +219,11 @@ Lexeme *primary(Parser *p) {
             y = optParamList(p);
             match(p, CP);
             return cons(FUNCCALL, x, y);
+        } else if (check(p, DOT)) {
+            y = match(p, DOT);
+            y->left = x;
+            y->right = primary(p);
+            return y;
         }
         return x;
     //} else if(operatorPending(p)) {

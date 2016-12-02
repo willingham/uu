@@ -20,7 +20,12 @@ Lexeme *eval(Lexeme *tree, Lexeme *env) {
             return tree;
         } else if (!strcmp(tree->type, BREAK)) {
             return tree;
+        } else if (!strcmp(tree->type, DOT)) {
+            return evalDot(tree, env);
         } else if (!strcmp(tree->type, ID) || !strcmp(tree->type, FUNC)) {
+            if (!strcmp(t->sval, this)) {
+                return env;
+            }
             return lookupEnv(tree, env);
         } else if (!strcmp(tree->type, FUNCDEF)) {
             return evalFuncDef(tree, env);
@@ -121,6 +126,12 @@ Lexeme *evalBlock(Lexeme *t, Lexeme *env) {
         t = cdr(t);
     }
     return result;
+}
+
+Lexeme *evalDot(Lexeme *t, Lexeme *env) {
+    Lexeme *l = eval(t->left, env);
+    Lexeme *r = lookupEnv(t->right, l);
+    return r;
 }
 
 Lexeme *evalPlus(Lexeme *t, Lexeme *env) {
@@ -225,6 +236,8 @@ Lexeme *evalAssign(Lexeme *t, Lexeme *env) {
         temp->left = value->left;
         temp->right = value->right;
         temp->array = value->array;
+    } else if (!strcmp(t->left->type, DOT)) {
+        Lexeme *x = eval(t->left->left, env);
     } else {
         insert(car(t), value, env);
     }

@@ -40,6 +40,7 @@ extern int forrPending(Parser *p);
 extern int iffPending(Parser *p);
 extern int optElsePending(Parser *p);
 extern int idListPending(Parser *p);
+extern int variablePending(Parser *p);
 
 // lhs grammar functions
 extern Lexeme *program(Parser *p);

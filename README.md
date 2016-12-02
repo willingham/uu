@@ -46,12 +46,31 @@ make functionsx
 These functions are ready for use in any uu program.
   - cons(a, b)
   - car(a)
+  - setCar(a)
   - cdr(a)
+  - setCdr(a)
+
   - stack()
   - push(item, stack)
   - pop(stack)
   - peek(stack)
+
   - print(items, to, print)
+  - println(items, to, print)
+
+  - min(a, b)
+  - max(a, b)
+
+  - node()
+  - getParent(n)
+  - setParent(n)
+  - getGrandparent(n)
+  - getValue(n)
+  - setValue(n)
+  - getLeft(n)
+  - setLeft(n)
+  - getRight(n)
+  - setRight(n)
 
 ## Example function
 ```go
