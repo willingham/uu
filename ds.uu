@@ -52,23 +52,75 @@ func stackSize(stk) {
 // binary tree helpers
 
 func node() {
-    cons(cons(cons(nil, nil), cons(nil, nil)), nil);
+    cons(
+        cons(
+            cons(nil, nil), 
+            cons(nil, nil)), 
+        nil);
 }
 
 func setWeight(n, w) {
-    cons(cons(cons(w, cdr(car(car(n)))), cdr(car(n))), cdr(n));
+    cons(
+        cons(
+            cons(
+                w,
+                cdr(car(car(n)))
+                ),
+            cons(
+                car(cdr(car(n))),
+                cdr(cdr(car(n)))
+                ),
+            ),
+        cdr(n)    
+        )
 }
 
 func setParent(n, p) {
-    cons(cons(cons(car(car(car(n))), w), cdr(car(n))), cdr(n));
+    cons(
+        cons(
+            cons(
+                car(car(car(n))),
+                p
+                ),
+            cons(
+                car(cdr(car(n))),
+                cdr(cdr(car(n)))
+                )
+            ),
+        cdr(n)    
+        )
 }
 
 func setLeft(n, l) {
-    cons(cons(car(car(n)), cons(l, cdr(cdr(car(n))))), cdr(n));
+    cons(
+        cons(
+            cons(
+                car(car(car(n))),
+                cdr(car(car(n)))
+                ),
+            cons(
+                l,
+                cdr(cdr(car(n)))
+                )
+            ),
+        cdr(n)    
+        )
 }
 
 func setRight(n, r) {
-    cons(cons(car(car(n)), cons(car(cdr(car(n))), r)), cdr(n));
+    cons(
+        cons(
+            cons(
+                car(car(car(n))),
+                cdr(car(car(n)))
+                ),
+            cons(
+                car(cdr(car(n))),
+                r
+                )
+            ),
+        cdr(n)    
+        )
 }
 
 func getGrand(n) {
