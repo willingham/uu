@@ -20,7 +20,10 @@ The double u programming language.
   make
   dpl <your input file>
   ```
- 
+## Vim Syntax File
+The uu.vim file will enable syntax highlighting for the uu language if you install it on your system.
+
+
 ## Test functions
 The following make commands allow for testing of various aspects of the language.
 ```sh
