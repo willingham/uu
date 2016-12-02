@@ -104,3 +104,78 @@ This is the structure in which programs are parsed and then evaluated.
 This is the grammar for the uu language.
 ![alt tag](https://github.com/thwillingham/uu/blob/master/grammar.png)
 
+```
+// Grammar for the double u programming language
+
+            program : expressionList
+
+     expressionList : expression
+                    | expression expressionList
+
+         expression : expr SEMI
+                    | loop
+                    | if
+                    | funcDef
+
+               expr : primary
+                    | primary operator expr
+
+         optParamList : *empty*
+                    | paramList
+
+          paramList : expr
+                    | expr COMMA paramList
+
+            primary : literal
+                    | OP expr CP                // nest expressions
+                    | lambda
+                    | ID                        // variable/func name
+                    | ID OSB expr CSB           // access array
+                    | ID OP optIdList CP     // call function
+                    | lambda OP optIdList CP
+
+           operator : MINUS       // -
+                    | PLUS        // +
+                    | DIVIDE      // /
+                    | MULTIPLY    // *
+                    | NOT         // !
+                    | GT          // >
+                    | LT          // <
+                    | GTE         // >=
+                    | LTE         // <=
+                    | ISEQUAL     // ==
+                    | AND         // &
+                    | OR          // |
+                    | EQUALS      // =
+
+            literal : INT
+                    | STRING
+
+            funcDef : FUNC ID OP optIdList CP block
+
+          optIdList : *empty*
+                    | idList
+
+             idList : ID
+                    | ID COMMA idList
+
+             lambda : LAMBDA OP optParamList CP block
+
+               loop : while
+                    | for
+
+              block : OCB optExpresionList CCB
+
+              while : WHILE OP expr CP block
+
+                for : FOR OP expr SEMI expr SEMI expr CP bock
+
+                 if : IF OP expr CP block optElse
+
+            optElse : ELSE block
+                    | ELSE if
+                    | *empty*
+
+
+
+```
