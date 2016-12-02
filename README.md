@@ -30,17 +30,17 @@ The uu.vim file will enable syntax highlighting for the uu language if you insta
 
 if exists("b:current_syntax")
     finish
-    endif
+endif
 
-    syn keyword basicLanguageKeywords func if else while for nil break
-    syn keyword builtins print println array
-    syn keyword stdlib stack push pop peek cons car cdr setCar setCdr min max node getParent getGrandparent setParent setLeft setRight getLeft getRight
-    syn match uuComment "//.*$"
+syn keyword basicLanguageKeywords func if else while for nil break
+syn keyword builtins print println array
+syn keyword stdlib stack push pop peek cons car cdr setCar setCdr min max node getParent getGrandparent setParent setLeft setRight getLeft getRight
+syn match uuComment "//.*$"
 
-    hi def link basicLanguageKeywords Statement
-    hi def link builtins Type
-    hi def link stdlib PreProc
-    hi def link uuComment Comment
+hi def link basicLanguageKeywords Statement
+hi def link builtins Type
+hi def link stdlib PreProc
+hi def link uuComment Comment
 ```
 
 ## Test functions
