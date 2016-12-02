@@ -1,0 +1,178 @@
+func insertionFixup(x) {
+    while (getParent(x) != nil) {
+        if (parentFavourSibiling(x)) {
+            setBalance(x);
+            break;      
+        } else if (getWeight(getParent(x)) == 0) {
+            setBalance(x);
+            x = getParent(x);
+        } else {
+            c = getFavoriteChild(x);
+            p = getParent(x);
+            if (notLinear(c, x, p)) {
+                if (isLeftChild(c)) {
+                    rotateRight(c);
+                    rotateLeft(c);
+                } else {
+                    rotateLeft(c);
+                    rotateRight(c);
+                }
+                setBalance(x);
+                setBalance(p);
+                setBalance(y);
+            } else {
+                if (isLeftChild(x)) {
+                    rotateRight(x);
+                } else {
+                    rotateLeft(x);
+                }
+                setBalance(p);
+                setBalance(x);
+            }
+        break;
+        }
+    }
+}
+
+func parentFavorSibling(x) {
+    pw = getWeight(getParent(x));
+    if (isLeftChild(x)) {
+        if (pw > 0) {
+            0;
+        } else {
+            1;
+        }
+    } else {
+        if (pw < 0) {
+            1;
+        } else {
+            0;
+        }
+    }
+}
+        
+
+func isRightChild(x) {
+    sameNode(getRight(getParent(x)), x);
+}
+
+func isLeftChild(x) {
+    sameNode(getLeft(getParent(x)), x);
+}
+
+
+func sameNode(x, y) {
+    if (getWeight(x) == getWeight(y)) {
+        if (getValue(x) == getValue(y)) {
+            1;
+        }
+    } else {
+        0;
+    }
+}
+
+func setBalance(x) {
+    l = getWeight(getLeft(x));
+    r = getWeight(getLeft(x));
+    setWeight(x, max(l, r) + 1);
+}
+
+func getFavoriteChild(x) {
+    if (getWeight(x) == 1) {
+        getLeft(x);
+    } else if (getWeight(x) < 0) {
+        getRight(x);
+    } else if (getLeft(x) != nil) {
+        getLeft(x);
+    } else {
+        getRight(x);
+    }
+}
+
+func notLinear(c, m, p) {
+    if (isLeftChild(c)) {
+        if (isLeftChild(m)) {
+            0;
+        } else {
+            1;
+        }
+    } else {
+        if (isRightChild(m)) {
+            0;
+        } else {
+            1;
+        }
+    }
+}
+
+func rotLeft(x) {
+    g = getGrandparent(x);
+    p = getParent(x);
+    if (g != nil) {
+        if (isLeftChild(p)) {
+            setLeft(g, x);
+        } else {
+            setRight(g, x);
+        }
+    }
+    setParent(x, g);
+    setLeft(x, p);
+    setParent(p, x);
+    setRight(p, nil);
+}
+
+func rotRight(x) {
+    g = getGrandparent(x);
+    p = getParent(x);
+    if (g != nil) {
+        if (isLeftChild(p)) {
+            setLeft(g, x);
+        } else {
+            setRight(g, x);
+        }
+    }
+    setParent(x, g);
+    setRight(x, p);
+    setParent(p, x);
+    setLeft(p, nil);
+}
+
+func tree() {
+    cons(nil, nil);
+}
+
+func bstInsert(t, v) {
+    
+    x = node();
+    setValue(x, v);
+    l = nil;
+    while (car(t) != nil) {
+        l = t;
+        if (car(t) == nil) {
+            println("SET ROOT");
+            setCar(t, v);
+            insertionFixup(car(t));
+            break;
+        } else if (getValue(x) < getValue(car(t))) {
+            println("MOVE LEFT");
+            t = getLeft(car(t));
+            if (t == nil) {
+                setLeft(car(l), t);
+                setParent(t, l);
+                insertionFixup(l);
+            }
+        } else {
+            println("MOVE RIGHT");
+            t = getRight(t);
+            if (t == nil) {
+                setRight(l, t);
+                setParent(t, l);
+                insertionFixup(l);
+            }
+        }
+    }
+}
+
+bst = tree();
+bstInsert(bst, 2);
+bstInsert(bst, 1);
