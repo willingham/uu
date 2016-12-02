@@ -1,3 +1,5 @@
+// cons, car, cdr
+
 func cons(x, y) {
     temp = array(2);
     temp[0] = x;
@@ -12,6 +14,8 @@ func car(x) {
 func cdr(x) {
     x[1];
 }
+
+// stack helpers
 
 func stack() {
     cons(nil, 0);
@@ -43,4 +47,31 @@ func pop(list) {
     
 func stackSize(stk) {
     cdr(stk);
+}
+
+// binary tree helpers
+
+func node() {
+    cons(cons(nil, nil), cons(nil, nil));
+}
+
+func setWeight(n, w) {
+    cons(cons(w, cdr(car(n))), cdr(n));
+}
+
+func setParent(n, p) {
+    cons(cons(car(car(n)), w), cdr(n));
+}
+
+func setLeft(n, l) {
+    cons(car(n), cons(l, cdr(cdr(n))));
+}
+
+func setRight(n, r) {
+    cons(car(n), cons(car(cdr(n)), r));
+}
+
+func getGrand(n) {
+    par = cdr(car(n));
+    cdr(car(par));
 }
