@@ -59,6 +59,10 @@ func node() {
         nil);
 }
 
+func getWeight(n) {
+    car(car(car(n)));
+}
+
 func setWeight(n, w) {
     cons(
         cons(
@@ -73,6 +77,10 @@ func setWeight(n, w) {
             ),
         cdr(n)    
         )
+}
+
+func getParent(n) {
+    cdr(car(car(n)));
 }
 
 func setParent(n, p) {
@@ -91,6 +99,10 @@ func setParent(n, p) {
         )
 }
 
+func getLeft(n) {
+    car(cdr(car(n)));
+}
+
 func setLeft(n, l) {
     cons(
         cons(
@@ -105,6 +117,10 @@ func setLeft(n, l) {
             ),
         cdr(n)    
         )
+}
+
+func getRight(n) {
+    cdr(cdr(car(n)));
 }
 
 func setRight(n, r) {
@@ -128,4 +144,23 @@ func getGrand(n) {
     cdr(car(car(par)));
 }
 
+func getValue(n) {
+    cdr(n);
+}
+
+func setValue(n, v) {
+    cons(
+    cons(
+        cons(
+            car(car(car(n))),
+            cdr(car(car(n)))
+            ),
+        cons(
+            car(cdr(car(n))),
+            cdr(cdr(car(n)))
+            )
+        ),
+        v
+        )
+}
 
